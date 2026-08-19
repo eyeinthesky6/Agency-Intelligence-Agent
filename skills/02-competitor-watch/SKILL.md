@@ -1,6 +1,6 @@
 ---
 name: competitor-watch
-description: Research and monitor competitors from a marketing and sales go-to-market perspective. Use to compare positioning, target buyers, campaigns, partnerships, content/SEO, case studies, channel programs, geography, conversion paths and public offers; or to track meaningful changes over time for an agency client/prospect.
+description: Research and monitor competitors from a marketing and sales go-to-market perspective. Use to compare positioning, target buyers, campaigns, partnerships, content/SEO, case studies, channel programs, geography, conversion paths and public offers; or to track meaningful changes over time for an agency client/prospect. Research batches must produce claims and pass verify-and-challenge before being treated as verified.
 ---
 
 # Competitor Marketing & GTM Intelligence
@@ -98,7 +98,7 @@ The point is not to list activities. Connect them.
 
 Example:
 
-> Competitor A has dedicated franchise pages + publishes setup/profit guides + announces each new city/station → it is building an investor/site-partner acquisition funnel, not merely consumer awareness.
+> Competitor A has dedicated franchise pages + publishes setup/profit guides + announces each new city/station → it appears to be deliberately recruiting investors/site partners, not merely creating consumer awareness.
 
 For each important pattern:
 
@@ -106,6 +106,9 @@ For each important pattern:
 - What competitor appears to be trying to achieve
 - Why that matters to the client/prospect
 - What the agency should investigate or consider
+- What public evidence **does not** establish (for example revenue contribution or actual campaign effectiveness)
+
+Never upgrade “visible activity” into “this works” without evidence.
 
 # Market pattern output
 
@@ -125,10 +128,12 @@ After comparing competitors, identify recurring GTM patterns such as:
 
 Distinguish:
 
-- **table stakes** — everyone credible does it
-- **winning-looking pattern** — repeated by strong competitors with evidence of traction
-- **white space** — underused but relevant opportunity
+- **table stakes** — recurring visible behavior among credible competitors
+- **strong precedent** — a competitor packages the motion especially clearly with credible proof
+- **white-space hypothesis** — apparently underused opportunity that must survive counterfactual search
 - **noise** — activity with no clear connection to acquisition/trust/conversion
+
+Avoid the phrase “winning pattern” unless there is actual evidence of commercial performance.
 
 # WATCH mode
 
@@ -144,37 +149,79 @@ Once a baseline exists, scan for deltas only:
 - conversion-flow changes
 - visible sales-motion change
 
-Append meaningful findings to `signals.jsonl`.
+A WATCH batch still needs evidence validation before its facts are appended as trusted signals.
 
 Signal example:
 
 ```json
-{"observed_at":"YYYY-MM-DD","entity":"Competitor","type":"gtm_move","fact":"Launched a dedicated franchise acquisition program and investor guide","source_url":"https://...","confidence":"high","impact":"Adds a structured site-capital acquisition funnel in a category where our client currently has only a generic partner form","recommended_action":"Evaluate whether site/investor partners are a priority audience and whether a dedicated funnel is justified"}
+{"observed_at":"YYYY-MM-DD","entity":"Competitor","type":"gtm_move","fact":"Launched a dedicated franchise acquisition program and investor guide","source_url":"https://...","confidence":"high","impact":"Adds a structured site/investor acquisition path in the category","recommended_action":"Evaluate whether site/investor partners are economically important to the client before proposing a dedicated funnel"}
 ```
 
-# Output — DEEP
+# Mandatory auditable output — DEEP
 
-`clients/<slug>/outputs/competitor-gtm-intelligence-YYYY-MM-DD.md`
+Create or use the current research run directory:
+
+```text
+clients/<slug>/outputs/<run-id>/
+```
+
+Write/update:
+
+```text
+draft.md
+claims.json
+```
+
+The competitor section of `draft.md` should contain:
 
 1. Executive read
 2. Competitor playbook table
 3. Individual competitor notes
 4. Repeated market/geography patterns
-5. What appears to work and why
-6. White spaces / weak spots
+5. Strong precedents and their evidence
+6. White-space hypotheses
 7. Implications for agency pitch or strategy
 8. Questions to verify with the client
 9. Sources
 
-# Output — WATCH
+Add to `claims.json`:
 
-`clients/<slug>/outputs/competitor-watch-YYYY-MM-DD.md`
+- every material competitor fact
+- all numbers/dates/current footprint claims
+- customer/partner relationship claims
+- every category-level pattern that changes the agency recommendation
+- every white-space inference
+
+A pattern is a claim too. It must be challengeable.
+
+# Mandatory auditable output — WATCH
+
+For a watch batch, create a small run directory with:
+
+```text
+draft.md
+claims.json
+```
+
+The draft contains:
 
 - Material GTM deltas
-- Why they matter
+- Why they may matter
 - Agency/client discussion implications
 - Noise ignored
 - Sources
+
+Do not append a material signal to trusted `signals.jsonl` until the evidence-verification stage has accepted the factual delta. When the watch interpretation drives a strategic recommendation, run the counterfactual stage as well.
+
+# Mandatory next step
+
+After DEEP research—and after any WATCH batch that creates a strategic recommendation—run:
+
+> `07-verify-and-challenge`
+
+Use fresh verifier and challenger contexts when supported.
+
+Do not call the competitor research “verified” before that gate passes.
 
 # Scope boundary
 
@@ -184,10 +231,13 @@ It does **not** recommend corporate pricing strategy, margins, working-capital s
 
 # Quality gate
 
+Before handing the draft to verification:
+
 - Does the analysis explain what competitors are *doing to acquire, convince and convert customers*?
 - Does it go beyond feature comparison?
-- Are competitor activities tied to likely GTM intent?
+- Are competitor activities tied to plausible GTM intent without claiming unproven effectiveness?
 - Are market/geography patterns evidence-backed?
+- Are material facts and strategic inferences captured in `claims.json`?
 - Does the output give the agency useful strategic direction without pretending to know internal performance?
 
-If not, it is still a Google summary. Keep working.
+If not, it is still a Google summary. Keep working before verification.
