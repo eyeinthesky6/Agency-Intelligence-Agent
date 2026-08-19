@@ -1,0 +1,50 @@
+name: smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate skills and templates
+        run: python scripts/smoke_test.py
+
+      - name: Render Excel-readable CSV
+        run: |
+          python scripts/render_csv.py templates/client-review.example.json /tmp/client-review.csv
+          test -s /tmp/client-review.csv
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install renderer dependency
+        run: npm install --ignore-scripts --no-audit --no-fund
+
+      - name: Render six-slide PowerPoint
+        run: |
+          node scripts/render_pptx.mjs templates/client-review.example.json /tmp/client-review.pptx
+          test -s /tmp/client-review.pptx
+
+      - name: Summary
+        run: |
+          echo "Skills, schemas, CSV and PPTX renderer passed." >> "$GITHUB_STEP_SUMMARY"
