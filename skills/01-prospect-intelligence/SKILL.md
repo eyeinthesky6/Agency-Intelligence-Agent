@@ -1,80 +1,246 @@
 ---
 name: prospect-intelligence
-description: Research a company the agency wants to win and produce a concise, sourced pitch brief. Use before a discovery call, proposal, pitch, or outreach when the agency needs to understand what matters to the prospect and where it may credibly help.
+description: Build a detailed company and go-to-market intelligence dossier for an agency before a pitch or strategy discussion. Research what the company sells, who buys it, how it appears to acquire customers, how it positions itself, what competitors are doing in market, which geographies and customer segments matter, and where an agency could credibly improve GTM or marketing.
 ---
 
-# Prospect Intelligence
+# Prospect Intelligence — Agency Prep
 
 ## Goal
 
-Turn a prospect name/website plus the agency's own service context into a **client-acquisition brief**, not a generic company profile.
+Give an agency enough **commercial and marketing context** to walk into a prospect conversation sounding as if it has studied the account, category and competitors properly.
+
+This is not a generic company profile and not management consulting.
+
+The skill should answer:
+
+1. What does this company really sell and to whom?
+2. How does it appear to go to market today?
+3. How do its main competitors market and sell differently?
+4. What appears to work in this category/geography?
+5. Which customer segments/accounts could the company plausibly pursue?
+6. What marketing/GTM directions are worth discussing with the prospect?
 
 ## Read first
 
 If available:
 
 - `clients/<prospect>/client-context.md`
-- agency service/positioning notes supplied by the user
-- previous proposal/contact notes
+- prior proposal / agency notes
+- uploaded pitch decks, brochures, reports, sales collateral
+- website and social URLs supplied by the user
 
-If no prospect context exists, create a lightweight context through `client-onboard` first or gather only the minimum needed here.
+Do not require internal data to start. Public evidence is enough for a useful first-pass agency brief.
 
-## Research questions
+# Research map
 
-Use no more than 5 focused web queries. Prioritize:
+Do not browse randomly. Work through the following layers.
 
-1. What does the company sell and to whom?
-2. What seems strategically important now? Use current launches, hiring, expansion, messaging, partnerships, campaigns, or other credible signals.
-3. Who are the obvious direct/indirect alternatives?
-4. Where is there evidence of a marketing/GTM problem or opportunity the agency could actually help with?
-5. What should the agency ask rather than assume?
+## 1. Company
 
-## Rules
+Capture:
 
-- A public symptom is not proof of an internal problem. Phrase inferred problems as hypotheses.
-- Do not invent budgets, conversion rates, CAC, churn, or internal priorities.
-- Prefer current primary sources, then credible secondary sources.
-- Keep source URLs with important facts.
-- Return at most **3 opportunity hypotheses**.
-- Each opportunity must connect the prospect evidence to something the agency can plausibly deliver.
+- products/services and important product lines
+- business model at a practical level
+- geography / city / state / country presence
+- customer types and named customers when public
+- partnerships / channels / distributors / franchise models
+- current growth/expansion signals
+- public pricing/offers only where visible and relevant
+- current website positioning and primary CTAs
+- proof points: customers, deployments, results, certifications, case studies
 
-## Output
+Financial facts are useful only as context for company scale. Do not perform valuation, working-capital or corporate-finance consulting.
 
-Save `clients/<prospect>/outputs/prospect-intelligence-YYYY-MM-DD.md` with:
+## 2. Current visible GTM
 
-### Prospect in 60 seconds
-Five bullets maximum.
+Investigate how the company currently appears to create demand and trust:
 
-### What appears to matter now
-3–5 sourced signals.
+- website structure and conversion paths
+- SEO/search-oriented pages
+- landing pages by use case / industry / geography
+- customer case studies
+- partner announcements
+- events, exhibitions and webinars
+- PR / founder-led narrative
+- LinkedIn/social themes and cadence when visible
+- dealer/distributor/franchise recruitment
+- referral/community programs
+- product demos / free trials / consultations / RFQ paths
+- sales contact flow
+- marketplace/app/network effects where relevant
 
-### Competitive / market context
-Only what changes the pitch.
+Do not equate posting frequently with having a good GTM strategy.
 
-### Opportunity hypotheses
+## 3. Competitor marketing playbooks
+
+Choose 3–5 relevant competitors or substitutes.
+
+For each, inspect:
+
+- headline positioning
+- target buyers/use cases
+- geography emphasis
+- proof and customer logos
+- acquisition/conversion offers
+- use-case/industry landing pages
+- case studies
+- partnerships and ecosystem motion
+- SEO/content topics
+- events / communities / channel programs
+- franchise/dealer/distributor motion where relevant
+- public pricing/promotions/membership only where useful
+- visible sales motion: enterprise demo, self-serve, partner-led, retail, field sales, app, franchise, etc.
+
+The output should explain **what each competitor is trying to make the market believe and how it seems to acquire customers**.
+
+## 4. Geography / category pattern
+
+Research what appears to matter in the target geography.
+
+Examples:
+
+- metro vs tier-2/3 growth
+- fragmented local channels vs national brands
+- government/enterprise procurement
+- channel partner importance
+- customer trust signals
+- regional language/local search
+- trade events / associations
+- ecosystem partnerships
+- offline + digital combinations
+
+Only make a geography claim when evidence supports it.
+
+## 5. Potential customer universe
+
+Do not create a giant scraped lead list.
+
+Identify 3–6 **customer archetypes** the company could plausibly pursue next based on:
+
+- who already buys from them
+- who buys from competitors
+- adjacent use cases
+- geography
+- partner ecosystems
+- public category adoption
+
+For each archetype give:
+
+- who they are
+- buying trigger
+- problem/use case
+- likely decision maker
+- why this company might fit
+- how an agency could reach/influence them
+- 3–5 illustrative target accounts only if credible public examples exist
+
+## 6. Cross-source synthesis
+
+A useful insight should normally connect more than one observation.
+
+Good:
+
+> Competitors are building dedicated franchise-investor landing pages + publishing economics/how-to content + using local expansion announcements → the category is not only selling charging to drivers; it is also recruiting capital/site partners. The prospect's generic partner form may therefore under-convert this audience.
+
+Bad:
+
+> Competitor X has a franchise page.
+
+For important insights show:
+
+- **Observed evidence**
+- **What it suggests**
+- **Agency implication**
+- **What should be verified with the prospect**
+
+# Output
+
+Save:
+
+`clients/<prospect>/outputs/prospect-intelligence-YYYY-MM-DD.md`
+
+Use this structure:
+
+## 1. Agency executive brief
+5–8 bullets maximum.
+
+## 2. Company GTM snapshot
+
+- company / category / scale
+- products/services
+- geography
+- likely buyers
+- visible sales motion
+- current positioning
+- proof points
+- visible CTAs / conversion paths
+
+## 3. Current marketing & sales footprint
+
+Explain what the company is actually doing today across website, content, partnerships, social/PR, events, channels and conversion.
+
+## 4. Competitor GTM comparison
+
+| Competitor | Positioning | Core buyer/use case | Marketing motion | Proof/assets | Conversion path | Geography/channel angle | What stands out |
+|---|---|---|---|---|---|---|---|
+
+## 5. What appears to work in this market/geography
+
+3–6 evidence-backed patterns.
+
+## 6. Customer opportunity map
+
+3–6 target customer archetypes with triggers and outreach/marketing routes.
+
+## 7. White spaces / agency hypotheses
+
+Maximum 5.
+
 For each:
 
-- **Evidence**
-- **Hypothesis**
-- **Why it matters**
-- **Agency angle**
-- **Confidence:** high / medium / low
+- Evidence
+- Hypothesis
+- Marketing/GTM direction
+- Why it could matter
+- Confidence
+- What to ask the prospect
 
-### Suggested pitch angle
-One short paragraph. No generic "transform your digital presence" language.
+These are directions for the agency, **not finished campaigns or content**.
 
-### Questions for discovery
-5–8 questions designed to confirm/refute the hypotheses.
+## 8. Suggested pitch themes
 
-### Sources
-URLs with dates/access context where useful.
+3–5 themes the agency could choose from when building its own pitch.
 
-## Quality gate
+Do not draft the final proposal unless asked separately.
 
-Would a salesperson/account lead be able to read this in five minutes and sound meaningfully better prepared on the call?
+## 9. Discovery questions
 
-If not, compress further.
+Questions that validate the most important unknowns: channel contribution, target segments, sales cycle, lead quality, partner strategy, geographic priorities, marketing ownership and constraints.
 
-## Stop condition
+## 10. Sources
 
-Stop when there is enough evidence to form three or fewer credible pitch hypotheses. More company trivia is not success.
+Keep source URLs for material claims.
+
+# Research depth
+
+Default:
+
+- company: 5–10 useful sources/pages
+- competitors: 3–5 competitors, 3–6 useful surfaces each
+- category/geography: enough evidence to establish recurring patterns
+
+Stop when further browsing repeats the same GTM story.
+
+# Quality gate
+
+Before finishing:
+
+- Does the brief describe **how the company appears to sell**, not just what it sells?
+- Does it compare competitor **marketing/GTM activity**, not just features?
+- Are at least 3 insights cross-source syntheses?
+- Does it identify customer archetypes rather than a random lead list?
+- Does it say what appears to work in the relevant geography/category?
+- Are agency recommendations marketing/GTM scoped rather than management consulting?
+- Would an agency strategist find something useful beyond the first page of Google results?
+
+If not, research/synthesize further.
