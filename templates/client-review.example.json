@@ -1,0 +1,47 @@
+{
+  "client": "Demo Client",
+  "period": "August 2026",
+  "headline": "Competitive pressure increased, but the strongest near-term move is sharper positioning rather than discounting.",
+  "executive_summary": [
+    "A competitor introduced a lower-priced entry offer.",
+    "The client's core conversion metric improved modestly versus the previous period.",
+    "The agency completed the planned landing-page message test.",
+    "The next recommendation is a value-led comparison test, not a price cut."
+  ],
+  "metrics": [
+    {"name": "Demo requests", "current": "128", "previous": "111", "note": "Illustrative data only"},
+    {"name": "Landing-page CVR", "current": "3.4%", "previous": "3.0%", "note": "Illustrative data only"}
+  ],
+  "signals": [
+    {
+      "fact": "Competitor A introduced a lower-priced starter plan.",
+      "impact": "The perceived entry-price advantage has narrowed.",
+      "confidence": "high",
+      "source": "https://example.com/pricing"
+    }
+  ],
+  "learnings": [
+    "Messaging that emphasizes time-to-value performed better than broad feature messaging in the current test.",
+    "Price is becoming more visible in the category, but there is not yet evidence that the client should discount."
+  ],
+  "actions_completed": [
+    "Launched landing-page messaging test",
+    "Updated competitor comparison notes"
+  ],
+  "recommendations": [
+    {
+      "action": "Test a value-led comparison page",
+      "why": "Respond to the competitor's price move by making economic value and time-to-value explicit.",
+      "priority": "high"
+    },
+    {
+      "action": "Interview three recent prospects on price sensitivity",
+      "why": "Validate whether entry price is actually affecting purchase decisions before changing packaging.",
+      "priority": "medium"
+    }
+  ],
+  "decisions_needed": [
+    "Approve the comparison-page test",
+    "Confirm access to recent prospect interview candidates"
+  ]
+}
