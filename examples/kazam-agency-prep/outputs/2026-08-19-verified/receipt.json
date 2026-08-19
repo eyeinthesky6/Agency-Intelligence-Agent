@@ -1,0 +1,36 @@
+{
+  "status": "VERIFIED_WITH_CAVEATS",
+  "run_id": "2026-08-19-kazam-verified",
+  "producer": "original Kazam agency-prep run",
+  "verifier": "independent evidence-verification pass",
+  "challenger": "counterfactual/disconfirming-evidence pass",
+  "reconciler": "final reconciliation pass",
+  "critical_claims": 9,
+  "verified_primary": 8,
+  "verified_corroborated": 2,
+  "partial": 1,
+  "stale": 0,
+  "unsupported": 0,
+  "contradicted": 1,
+  "counterfactual_challenges": 5,
+  "counterfactual_overturns": 2,
+  "counterfactual_weakens": 2,
+  "counterfactual_unchanged": 1,
+  "counterfactual_strengthens": 0,
+  "counterfactual_unresolved": 0,
+  "repair_attempts": 0,
+  "unresolved_questions": [
+    "Which partner/channel classes materially contribute revenue or deployments?",
+    "How much qualified pipeline is influenced by the current website/use-case journeys?",
+    "Which customer names/outcomes can be publicly disclosed?",
+    "Where does marketing actually constrain the core 3W/home-charging engine versus enterprise expansion?"
+  ],
+  "material_changes_from_original": [
+    "Reordered agency priorities after verifying that tier-2/3 three-wheeler/home charging is the current major revenue engine.",
+    "Removed the claim that data-led category authority is a blank whitespace; Kazam already operates this motion.",
+    "Downgraded partner acquisition from a presumed major growth motion to a visible category pattern requiring internal economic validation.",
+    "Downgraded website restructuring from recommendation to buyer-journey audit hypothesis.",
+    "Retained enterprise proof architecture as a strong direction with customer-permission caveat."
+  ],
+  "completed_at": "2026-08-19T19:37:00+05:30"
+}
