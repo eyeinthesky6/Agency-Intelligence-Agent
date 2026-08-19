@@ -25,8 +25,7 @@ REQUIRED_SKILLS = [
     "03-meeting-prep",
     "04-growth-opportunities",
     "05-client-review",
-    "06-campaign-brief",
-    "07-pricing-strategy",
+    "06-agency-direction",
 ]
 
 REVIEW_REQUIRED_FIELDS = {
@@ -53,8 +52,9 @@ def main() -> int:
         check(path.exists(), f"Missing skill: {path}")
         text = path.read_text(encoding="utf-8")
         check(text.startswith("---\n"), f"Missing YAML frontmatter: {path}")
-        check("name:" in text.split("---", 2)[1], f"Missing skill name: {path}")
-        check("description:" in text.split("---", 2)[1], f"Missing skill description: {path}")
+        frontmatter = text.split("---", 2)[1]
+        check("name:" in frontmatter, f"Missing skill name: {path}")
+        check("description:" in frontmatter, f"Missing skill description: {path}")
 
     signal_path = ROOT / "templates" / "signal.example.json"
     signal = json.loads(signal_path.read_text(encoding="utf-8"))
@@ -71,9 +71,10 @@ def main() -> int:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     check("scripts/render_csv.py" in readme, "README missing render_csv.py")
     check("scripts/render_pptx.mjs" in readme, "README missing render_pptx.mjs")
-    check("render_xlsx.py" not in readme, "README contains stale render_xlsx.py reference")
+    check("pricing-strategy" not in readme, "README still references consulting pricing skill")
+    check("campaign-brief" not in readme, "README still references removed campaign generator")
 
-    print(f"PASS: {len(REQUIRED_SKILLS)} skills + templates + renderer references")
+    print(f"PASS: {len(REQUIRED_SKILLS)} agency intelligence skills + templates + renderer references")
     return 0
 
 
