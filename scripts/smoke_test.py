@@ -26,6 +26,7 @@ REQUIRED_SKILLS = [
     "04-growth-opportunities",
     "05-client-review",
     "06-campaign-brief",
+    "07-pricing-strategy",
 ]
 
 REVIEW_REQUIRED_FIELDS = {
