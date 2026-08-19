@@ -1,0 +1,11 @@
+{
+  "id": "S-001",
+  "observed_at": "2026-08-19",
+  "entity": "Competitor A",
+  "type": "pricing_change",
+  "fact": "Introduced a lower-priced starter plan",
+  "source_url": "https://example.com/pricing",
+  "confidence": "high",
+  "impact": "Reduces the entry-price gap against the client",
+  "recommended_action": "Test value-led starter positioning before considering a discount"
+}
