@@ -4,7 +4,7 @@
 
 Build the smallest useful intelligence assistant for agencies.
 
-The product helps an agency become better prepared, faster: understand a client, research a prospect, notice meaningful competitor changes, prepare meetings, recommend a few actions, and package the result into familiar client-ready artifacts.
+The product helps an agency become better prepared, faster: understand a client, research a prospect, uncover non-obvious commercial insights, investigate product/market/pricing/competitor moves, prepare meetings, recommend a few actions, and package the result into familiar client-ready artifacts.
 
 ## Prime directive
 
@@ -25,16 +25,18 @@ When choosing between:
 Every workflow should follow:
 
 ```text
-CONTEXT → PLAN → RESEARCH → EVIDENCE → INTERPRET → ACTION → ARTIFACT
+CONTEXT → QUESTION → PLAN → RESEARCH → EVIDENCE → SYNTHESIS → ACTION → ARTIFACT
 ```
 
 A useful result must answer:
 
 1. What did we learn?
 2. What evidence supports it?
-3. Why does it matter to this specific client/prospect?
-4. What should the agency do next?
-5. What can be handed to a human/client?
+3. What **new conclusion follows from combining the evidence**?
+4. Why does it matter to this specific client/prospect?
+5. What should the agency/company do next?
+6. What must management verify before acting?
+7. What can be handed to a human/client?
 
 ## Non-goals for v0
 
@@ -73,18 +75,47 @@ A public-source claim must retain its source URL and observation date.
 
 ## Research discipline
 
-### Search less, decide better
+### Search less, synthesize better
 
-Default research budget for one skill run:
+Default research budget for a normal run:
 
 - named competitors: maximum 5 unless the user asks for more
 - sources per important claim: target 2 when practical
-- new market/category searches: maximum 5 focused queries
-- recommendations: maximum 3 primary actions
+- focused market/category searches: maximum 5 before re-planning
+- recommendations: maximum 3 primary actions for normal workflow; DEEP competitive mode may return up to 5
 
-Stop researching when additional sources are repeating the same conclusion.
+A DEEP investigation may exceed these budgets when new sources are materially changing the thesis, but source count is never a quality metric.
 
-### Prefer deltas
+Stop when additional sources repeat the same commercial story.
+
+### Search snippets are not insights
+
+A deep insight must normally combine **two or more pieces of evidence**.
+
+Use this structure:
+
+```text
+Evidence A
++ Evidence B
+(+ Evidence C if useful)
+→ Inference
+→ Commercial implication
+→ What would falsify / verify it
+```
+
+Example:
+
+```text
+Large new order relative to revenue
++ already-stretched inventory/receivable cycle
+→ growth may create a financing constraint
+→ price working capital / volume / inventory terms into the contract
+→ verify actual payment, forecast and safety-stock terms
+```
+
+Do not disguise a public fact as a proprietary insight.
+
+### Prefer deltas for recurring research
 
 For recurring intelligence, compare against existing signals/context and report **what changed**. Do not repeatedly generate generic competitor profiles.
 
@@ -93,7 +124,7 @@ For recurring intelligence, compare against existing signals/context and report 
 For important intelligence use:
 
 - **Fact:** verifiable observation
-- **Impact:** why it matters to this client, campaign, pitch, or deal
+- **Impact:** why it matters to this client, campaign, product, pitch, contract, or deal
 - **Act:** a specific recommended next move
 
 If there is no credible Impact, it is probably noise.
@@ -108,6 +139,60 @@ Use only:
 - `low` — inference, ambiguous, stale, or weakly sourced
 
 Never convert a competitor's marketing claim into a verified product fact without saying it is a claim.
+
+## Industrial / B2B rule
+
+For manufacturing and B2B companies, do not default to consumer-marketing advice.
+
+Explicitly examine where relevant:
+
+- revenue/margin/cash economics
+- order/customer concentration
+- capacity and utilization
+- legacy vs emerging product families
+- process substitutes (machining, forging, casting, import, in-house, etc.)
+- qualification / switching costs
+- application engineering
+- distribution / direct OEM / Tier-1 / dealer / export channels
+- pricing architecture and commercial terms
+- tooling/NRE
+- raw-material/FX pass-through
+- inventory / receivables / payment terms
+- localization / import substitution
+- certifications and technical proof
+
+Marketing recommendations should reduce sales friction, create qualified applications, expand accounts or improve pricing power.
+
+Good industrial marketing assets include:
+
+- technical case studies
+- application landing pages
+- conversion / TCO calculators
+- RFQ qualification tools
+- design guides
+- localization/import-substitution proof
+- account battlecards
+- prototype/sample programs
+- target-account campaigns
+
+A content calendar is not a strategy by default.
+
+## Pricing discipline
+
+Never guess a private/custom industrial price merely because the user asked for pricing.
+
+If list prices do not exist, build:
+
+- customer economic alternative
+- seller cost-to-serve
+- tooling/NRE economics
+- volume assumptions
+- working-capital burden
+- contract-term risks
+- pricing corridor
+- negotiation architecture
+
+Separate exact facts from scenarios.
 
 ## Tool policy
 
@@ -141,8 +226,10 @@ Canonical outputs are Markdown/JSON because they are portable and inspectable.
 
 Optional renderers may create:
 
-- `.xlsx` action/signal tracker
-- `.pptx` short client review/pitch deck
+- `.csv` action/signal/review tables that open in Excel/Google Sheets
+- `.pptx` short client review/pitch decks
+
+A host with native spreadsheet support may create richer `.xlsx` files from the same canonical JSON.
 
 Keep decks short. Default: 6 slides.
 Keep spreadsheets decision-oriented. Avoid decorative complexity.
@@ -168,10 +255,13 @@ Before considering a run complete:
 
 - Does every important external claim have a source?
 - Did we separate facts from inference?
-- Is the output specific to the client/prospect?
+- For DEEP work, did we actually synthesize multiple facts into non-obvious conclusions?
+- Is the output specific to the client's economics, product and buying process?
 - Did we avoid generic marketing advice?
+- Did we consider substitutes/status quo, not only named rivals?
+- If pricing matters, did we address contract/cash economics rather than fake list prices?
 - Are recommendations few and executable?
+- Did we state what management needs to verify?
 - Is there a usable artifact?
-- Would an account manager understand it in under five minutes?
 
 If yes, stop. Do not polish indefinitely.
