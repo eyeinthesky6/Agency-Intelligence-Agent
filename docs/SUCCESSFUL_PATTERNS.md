@@ -159,7 +159,7 @@ Sources:
 
 ### Agency Intelligence translation
 
-Signals are structured JSONL. Client actions are structured JSON. XLSX/PPTX are renderings of those canonical structures.
+Signals are structured JSONL. Client actions are structured JSON. PPTX/CSV are renderings of canonical structures rather than another generation pass.
 
 ---
 
@@ -181,13 +181,102 @@ That is the bridge between "research tool" and "agency intelligence."
 
 ### Agency Intelligence translation
 
-Do this without execution APIs first. We can recommend and draft; humans decide and execute.
+Do this without execution APIs first. We prepare the agency to decide; the agency owns the final pitch/campaign.
+
+---
+
+## 8. Loop engineering — design the verification cycle, not just the prompt
+
+"Loop engineering" emerged in 2026 as a useful name for the layer above prompt/context/harness work: define the repeated work as a bounded loop with goal, state, verification, retry/stop rules and human gates.
+
+Useful references:
+
+- https://www.anthropic.com/engineering/harness-design-long-running-apps
+- https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
+- https://www.ibm.com/think/topics/loop-engineering
+- https://arxiv.org/abs/2607.00038
+- https://arxiv.org/abs/2607.25152
+- https://arxiv.org/abs/2607.14890
+
+### Pattern worth copying
+
+#### Separate creation from judgment
+
+Anthropic's long-running application-development work explicitly separates generator and evaluator roles because agents tend to overrate work they produced themselves. A skeptical standalone evaluator is easier to tune than self-criticism inside the producing context.
+
+**Agency translation:** the research Producer does not certify its own research.
+
+#### Ground verification outside the report
+
+A second model reading the same draft can reproduce the same blind spots. Verification should reopen URLs, check exact numbers/dates/entities and seek independent sources for critical claims.
+
+**Agency translation:** evidence status comes from fresh source checks, not a confidence score.
+
+#### Treat output as a claim until the evidence gate passes
+
+A loop should not move from `DRAFT` to `VERIFIED` merely because an agent says it is done.
+
+**Agency translation:** terminal state is evidence-gated:
+
+- `VERIFIED`
+- `VERIFIED_WITH_CAVEATS`
+- `REVIEW_REQUIRED`
+- `FAILED_EVIDENCE_GATE`
+
+#### Make the verifier capable of changing the strategy
+
+Verification is not link linting. If new evidence shows the account story is wrong, the final agency direction must change.
+
+The Kazam benchmark demonstrates this:
+
+- initial report over-weighted enterprise GTM based on visible product/website surfaces;
+- independent evidence showed three-wheeler home charging and tier-2/3 markets are central current revenue engines;
+- counterfactual search found that Kazam already operates a data/research motion, overturning the supposed "category authority whitespace";
+- final agency priorities were reconciled accordingly.
+
+See:
+
+```text
+examples/kazam-agency-prep/outputs/2026-08-19-verified/
+```
+
+#### One repair cycle, not infinite self-approval
+
+If verification fails a material claim:
+
+```text
+fail → repair once → reverify → stop/escalate
+```
+
+Do not keep researching until the model finds a page that supports its favorite narrative.
+
+#### Counterfactual search should be active
+
+The Challenger asks:
+
+- what if the visible tactic is not working?
+- what if the buyer/geography differs?
+- what if the "whitespace" already exists?
+- what if the company's actual revenue engine is elsewhere?
+- what strong competitor/channel did we omit?
+- what evidence would make this recommendation a waste of money?
+
+Then it searches for evidence that distinguishes the Producer thesis from the alternative.
+
+### What not to copy
+
+- endless autonomous loops
+- three agents voting without reopening evidence
+- using model agreement as proof
+- adding more calls without a stopping rule
+- verifier prompts that merely ask "is this good?"
+- retry-until-pass behavior
 
 ---
 
 # The composite pattern for this repo
 
-The reusable architecture is:
+The reusable architecture is now:
 
 ```text
 CLIENT CONTEXT
@@ -200,13 +289,17 @@ WEB + CLIENT SOURCES
       ↓
 STRUCTURED FACTS + SOURCES
       ↓
-COMPRESS / RANK
+COMPRESS / SYNTHESIZE
       ↓
-FACT → IMPACT → ACT
+AGENCY DRAFT + CLAIM LEDGER
       ↓
-MARKDOWN / JSON SOURCE OF TRUTH
+INDEPENDENT EVIDENCE VERIFIER
       ↓
-PPTX / XLSX WHEN USEFUL
+COUNTERFACTUAL CHALLENGER
+      ↓
+RECONCILER
+      ↓
+FINAL ARTIFACT + EVIDENCE RECEIPT
 ```
 
 ## Things successful systems often have that we are deliberately postponing
@@ -220,9 +313,9 @@ These can be valuable at scale but are not prerequisites for proving this produc
 - custom enrichment networks
 - automatic campaign execution
 - observability platforms
-- queues / retries infrastructure
+- queues / retry infrastructure beyond the bounded research loop
 - dashboards
-- multi-agent supervisors
+- persistent multi-agent supervisors
 
 ## V0 design tests
 
