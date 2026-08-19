@@ -26,7 +26,7 @@ The architecture is based on patterns repeatedly seen in adopted agent products 
 - **Plan → research → compress → deliver.** Open Deep Research separates research, summarization/compression, and final report generation instead of asking one giant prompt to do everything.
 - **Structured outputs with sources.** Claygent and Gumloop make agent research useful downstream by returning fields/tables with evidence, not just prose.
 - **Persistent context.** Successful GTM skill packs store company/product context once and let later skills read it.
-- **Finite tool budgets and recovery.** Browser-use exposes bounded actions and recovery loops instead of unlimited browsing.
+- **Finite tool budgets and recovery.** Browser Use exposes bounded actions and recovery loops instead of unlimited browsing.
 - **Human approval before execution.** This repo recommends actions; it does not autonomously spend ad budgets, alter campaigns, or contact customers in v0.
 
 See [`docs/SUCCESSFUL_PATTERNS.md`](docs/SUCCESSFUL_PATTERNS.md) for the research notes and what we intentionally rejected.
@@ -51,10 +51,11 @@ Agency-Intelligence-Agent/
 ├── templates/
 │   ├── client-context.md
 │   ├── signal.example.json
+│   ├── client-review.example.json
 │   └── weekly-intelligence.md
 ├── scripts/
-│   ├── render_xlsx.py
-│   └── render_pptx.py
+│   ├── render_csv.py
+│   └── render_pptx.mjs
 └── examples/
     └── demo-client/
 ```
@@ -81,15 +82,19 @@ The result is:
 clients/acme/client-context.md
 ```
 
-### 2. Research before a meeting
+### 2. Research a prospect
+
+> Run `01-prospect-intelligence` for Acme. Give me three or fewer evidence-backed opportunity hypotheses and the questions I should ask to validate them.
+
+### 3. Prepare for a meeting
 
 > Run `03-meeting-prep` for Acme. Use the client context, recent signals, and open actions. Give me only what matters for tomorrow's meeting.
 
-### 3. Check competitors
+### 4. Check competitors
 
 > Run `02-competitor-watch` for Acme. Check the named competitors and report only material changes since our last scan. Store sourced signals and recommend an action only where justified.
 
-### 4. Ask what to do next
+### 5. Ask what to do next
 
 > Run `04-growth-opportunities` for Acme. Give me the top three evidence-backed opportunities, ranked by likely impact and effort.
 
@@ -119,16 +124,25 @@ A signal should look like:
 }
 ```
 
-That JSONL history is enough memory for v0. We will add infrastructure only when users prove they need it.
+That JSONL history is enough memory for v0. Add infrastructure only when users prove they need it.
 
 ## Outputs
 
-The canonical output is Markdown. Two optional scripts convert structured review data into familiar agency artifacts:
+Markdown/JSON remain the source of truth. Optional deterministic renderers convert client-review JSON into familiar agency artifacts:
 
-- `scripts/render_xlsx.py` → action / signal tracker
-- `scripts/render_pptx.py` → short client intelligence deck
+```bash
+# Excel-readable tracker/table; no dependencies
+python scripts/render_csv.py templates/client-review.example.json
 
-Markdown stays the source of truth so the system remains inspectable and portable across Codex, Claude Code, Cursor, Windsurf, and other Agent-Skills-compatible environments.
+# Six-slide PowerPoint
+npm install
+node scripts/render_pptx.mjs templates/client-review.example.json
+```
+
+- `scripts/render_csv.py` → UTF-8 CSV that opens directly in Excel/Google Sheets
+- `scripts/render_pptx.mjs` → six-slide `.pptx` client review
+
+A host environment with native spreadsheet tooling can turn the same JSON into a richer `.xlsx` without changing the agent workflow.
 
 ## Product boundary
 
@@ -142,7 +156,7 @@ Markdown stays the source of truth so the system remains inspectable and portabl
 - growth recommendations
 - client-review narratives
 - campaign briefs
-- PPTX/XLSX export
+- PPTX + Excel-readable CSV export
 
 ### Explicitly not in v0
 
@@ -173,4 +187,4 @@ The core question is not "Is the AI impressive?" It is **"Did this save the agen
 
 ## License
 
-License to be selected before public reuse of third-party-derived material. This repository currently borrows **patterns**, not copied skill text, from external projects.
+This repository borrows **patterns**, not copied third-party skill text, from the referenced projects. See the repository license before redistributing modifications.
