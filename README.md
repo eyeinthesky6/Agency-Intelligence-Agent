@@ -1,38 +1,136 @@
 # Agency Intelligence Agent
 
-A lightweight, skill-based AI workspace that helps agencies research prospects, understand clients, investigate competitors, uncover non-obvious commercial insights, think through pricing, prepare meetings, find growth opportunities, and create client-ready briefs.
+A lightweight, skill-based research and GTM intelligence layer for marketing and sales agencies.
 
-**The rule:** useful bus, not interplanetary rocket.
+It helps an agency understand a company, study its competitors' marketing and sales motions, identify category/geography patterns, map likely customer segments, and decide what strategic directions are worth pitching.
 
-This project intentionally starts as a portable set of Agent Skills, plain-text client memory, and tiny export scripts. It does **not** require a database, vector store, dashboard, multi-agent framework, browser farm, or custom SaaS backend.
+**The rule:** research deeply; recommend narrowly; leave execution to the agency.
+
+This repo intentionally stays portable: Agent Skills + plain-text memory + simple artifacts. No database, vector store, multi-agent framework, custom crawler or SaaS backend is required for v0.
+
+## Who this is for
+
+- marketing agencies
+- GTM agencies
+- B2B demand-generation agencies
+- sales/ABM agencies
+- growth agencies
+- agency founders and strategists preparing pitches
+- account leads preparing client strategy/reviews
+
+The company itself can use the skills too, but the primary product is **agency prep and intelligence**.
 
 ## What it does
 
-For each client or prospect, the agent can:
+1. **Client Onboard** — capture durable client/prospect context once.
+2. **Prospect Intelligence** — research the company, visible GTM, buyer groups, geography and competitors.
+3. **Competitor GTM Intelligence** — study how 3–5 competitors position, acquire trust, use channels/partners/content and convert interest.
+4. **Meeting Prep** — turn existing intelligence into a short pre-call brief.
+5. **GTM Opportunities** — identify evidence-backed marketing/sales directions rather than generic services.
+6. **Client Review** — package what changed, what the agency learned and what should be discussed next.
+7. **Agency Direction Brief** — synthesize the research into pitch themes, target audiences, competitor precedents, white spaces and discovery questions.
 
-1. **Onboard context** — turn a website, proposal, brand deck, notes, reports, and competitor list into one reusable `client-context.md`.
-2. **Research a prospect** — produce a pitch brief with evidence-backed hypotheses and questions to validate them.
-3. **Run deep competitive intelligence** — connect product, financial, customer, pricing, channel and competitor clues into a commercial story rather than summarising search results.
-4. **Watch competitors** — report meaningful *changes*, not generic profiles.
-5. **Prepare a client meeting** — turn client context + recent signals + previous actions into a one-page briefing.
-6. **Find growth opportunities** — recommend a small number of actions tied to evidence.
-7. **Prepare a client review** — explain what changed, what the agency did, what it means, and what should happen next.
-8. **Create a campaign brief** — convert an approved opportunity into an execution-ready brief.
-9. **Build a pricing strategy** — for list-price or RFQ businesses, separate seller cost, buyer value, working-capital exposure and contract terms instead of guessing a market price.
+## What this repo is NOT
 
-## Successful patterns we deliberately copy
+This is not McKinsey-in-a-box.
 
-The architecture is based on patterns repeatedly seen in adopted agent products and open-source agents:
+It does not own:
 
-- **One clear job → one useful artifact.** GPT Researcher became popular by turning a research question into a sourced report rather than pretending to be a general employee.
-- **Plan → research → compress → deliver.** Open Deep Research separates research, summarization/compression, and final report generation instead of asking one giant prompt to do everything.
-- **Structured outputs with sources.** Claygent and Gumloop make agent research useful downstream by returning fields/tables with evidence, not just prose.
-- **Persistent context.** Successful GTM skill packs store company/product context once and let later skills read it.
-- **Finite tool budgets and recovery.** Browser Use exposes bounded actions and recovery loops instead of unlimited browsing.
-- **Cross-source synthesis.** A deep insight must connect multiple facts and explain the commercial implication; copied search snippets do not qualify.
-- **Human approval before execution.** This repo recommends actions; it does not autonomously spend ad budgets, alter campaigns, or contact customers in v0.
+- corporate pricing strategy
+- margins / working capital / finance consulting
+- product engineering
+- manufacturing/process consulting
+- org design
+- M&A / valuation
+- finished content generation by default
+- autonomous ad or outbound execution
 
-See [`docs/SUCCESSFUL_PATTERNS.md`](docs/SUCCESSFUL_PATTERNS.md) for the research notes and what we intentionally rejected.
+Those are separate products/workflows.
+
+## Core workflow
+
+```text
+COMPANY CONTEXT
+      ↓
+COMPANY GTM RESEARCH
+      ↓
+COMPETITOR MARKETING / SALES PLAYBOOKS
+      ↓
+CATEGORY + GEOGRAPHY PATTERNS
+      ↓
+CUSTOMER / AUDIENCE OPPORTUNITY MAP
+      ↓
+AGENCY GTM DIRECTIONS
+      ↓
+AGENCY PREP ARTIFACT
+```
+
+## What counts as intelligence
+
+A search result is evidence, not the answer.
+
+**Weak:**
+
+> Statiq has a franchise page.
+
+**Useful:**
+
+> Statiq has a dedicated FOCO/franchise funnel, publishes business-model/setup education and promotes each local deployment. ChargeZone also markets franchise ownership, while Bolt.Earth recruits distributors and Kazam has partner/dealer intake. Together this suggests that partner/site acquisition is a category-level GTM motion in India, not merely a support function. An agency should therefore check whether the prospect needs a dedicated partner-acquisition journey rather than a generic contact form.
+
+That is the standard: connect multiple public observations into an agency-relevant implication.
+
+## What gets researched
+
+### Company
+
+- what it sells
+- who appears to buy it
+- geography
+- visible sales motion
+- website positioning / CTAs
+- product/use-case pages
+- customer proof / case studies
+- partnerships and channels
+- public offers/pricing where relevant to GTM
+- current growth/expansion signals
+
+### Competitors
+
+- positioning
+- target buyers/use cases
+- SEO/content footprint
+- social/founder/PR themes
+- customer proof
+- case studies
+- partnerships/ecosystem
+- events/community
+- dealer/distributor/franchise motion
+- geography/local expansion
+- conversion paths
+- public offers/memberships/pricing where visible
+
+### Market / geography
+
+- what repeated acquisition motions appear to work
+- metro vs tier-2/3 dynamics
+- channel/partner importance
+- local search / city pages
+- category education needs
+- trade/event/community importance
+- public-sector/enterprise procurement where relevant
+
+### Customer opportunity
+
+First identify customer archetypes, not giant lead lists:
+
+- who they are
+- buying trigger
+- problem/job
+- likely decision maker
+- why the company may fit
+- route to influence/reach them
+
+Illustrative target accounts come only after the archetype is credible.
 
 ## Repository layout
 
@@ -50,90 +148,51 @@ Agency-Intelligence-Agent/
 │   ├── 03-meeting-prep/
 │   ├── 04-growth-opportunities/
 │   ├── 05-client-review/
-│   ├── 06-campaign-brief/
-│   └── 07-pricing-strategy/
+│   └── 06-agency-direction/
 ├── templates/
-│   ├── client-context.md
-│   ├── signal.example.json
-│   ├── client-review.example.json
-│   └── weekly-intelligence.md
 ├── scripts/
-│   ├── render_csv.py
-│   ├── render_pptx.mjs
-│   └── smoke_test.py
 └── examples/
-    ├── wakefit-prospect/
-    └── sintercom-prospect/
+    └── kazam-agency-prep/
 ```
 
 ## Quick start
 
-### 1. Give the agent a client
+### 1. Research the company
 
-Create `clients/acme/`, put available material there (or grant access to a Drive folder / uploads / URLs), then ask:
+> Run `01-prospect-intelligence` for Kazam. Build a detailed agency-prep dossier. Study the company, visible GTM, 3–5 competitors, category/geography patterns and likely customer archetypes. Do not give me a generic company profile.
 
-> Run `00-client-onboard` for Acme. Build the client context from what is available. Mark unknowns instead of inventing them.
+### 2. Go deeper on competitors
 
-### 2. Research a prospect
+> Run `02-competitor-watch` in DEEP mode. Compare how competitors position, generate attention, build trust, recruit partners/channels and convert buyers. Tell me what appears table stakes, what looks effective and where there is whitespace.
 
-> Run `01-prospect-intelligence` for Acme. Give me three or fewer evidence-backed opportunity hypotheses and the questions I should ask to validate them.
+### 3. Decide what the agency should consider pitching
 
-### 3. Run deeper competitive intelligence
+> Run `04-growth-opportunities`. Give me the strongest evidence-backed GTM/marketing directions. Do not write campaigns yet.
 
-> Run `02-competitor-watch` in DEEP mode for Acme. Do not summarise search results. Build a product-market, customer, competitor, pricing/commercial and route-to-market story. Every major insight must combine at least two pieces of evidence and state what would falsify the inference.
+### 4. Compress it for the agency partner
 
-### 4. Check what changed later
+> Run `06-agency-direction`. Give me the account story, customer map, competitor precedents, pitch themes, what not to pitch and the questions we must ask before proposal.
 
-> Run `02-competitor-watch` in WATCH mode for Acme. Report only material changes since our last scan.
+## Example benchmark — Kazam Energy
 
-### 5. Work out pricing/commercial terms
+The benchmark researches Kazam (reported FY25 revenue around ₹40 crore) against Statiq, Bolt.Earth and ChargeZone.
 
-> Run `07-pricing-strategy` for Acme. If prices are not public, do not guess them. Show the buyer's economic alternative, cost-to-serve model, working-capital exposure, contract terms, pricing corridor and what management must supply before quoting.
+It surfaces patterns such as:
 
-### 6. Prepare for a meeting
+- partner/site/channel acquisition is a real category GTM motion
+- use-case-specific landing pages are increasingly table stakes
+- recognizable deployment/customer proof is critical trust currency
+- enterprise case studies are strong sales-enablement assets
+- tier-2/3/local expansion needs different GTM support than national brand messaging
+- Kazam's broad technology stack can be reframed into simpler buyer journeys
 
-> Run `03-meeting-prep` for Acme. Use the client context, recent signals, and open actions. Give me only what matters for tomorrow's meeting.
+See:
 
-### 7. Ask what to do next
-
-> Run `04-growth-opportunities` for Acme. Give me the top three evidence-backed opportunities, ranked by likely impact and effort.
-
-## What counts as an insight
-
-A search result is evidence, not intelligence.
-
-**Bad:**
-
-> Company X received a ₹150 crore export order.
-
-**Useful:**
-
-> The order is unusually large relative to Company X's annual revenue, while its receivable/inventory cycle and bank-limit utilisation are already stretched. If the order ramps without better payment, batching or inventory terms, revenue growth can create a financing problem. The commercial recommendation is therefore not merely "win more orders"; it is to price working capital and order-smoothing into the contract.
-
-The second statement is an inference. It must show the source facts, confidence, and the management data needed to verify it.
-
-## Industrial/manufacturing research
-
-For B2B manufacturers, DEEP mode explicitly looks at:
-
-- customers and customer concentration
-- single-source / multi-source status
-- order wins relative to company size
-- legacy vs emerging product families
-- substitute manufacturing processes
-- technology licensing / JVs / patents
-- capacity / localization / exports
-- working capital and margin pressure
-- RFQ pricing architecture
-- raw-material pass-through / FX / tooling / payment terms
-- competitors' application breadth
-- application-engineering and technical marketing gaps
-
-The result should help the company sell, price, diversify, position or choose a product/market direction — not merely create a content calendar.
+```text
+examples/kazam-agency-prep/
+```
 
 ## Client memory
-
-The primary memory is deliberately boring:
 
 ```text
 clients/<client>/client-context.md
@@ -142,69 +201,43 @@ clients/<client>/actions.json
 clients/<client>/outputs/
 ```
 
-That JSONL history is enough memory for v0. Add infrastructure only when users prove they need it.
+Files are enough for v0.
 
 ## Outputs
 
-Markdown/JSON remain the source of truth. Optional deterministic renderers convert client-review JSON into familiar agency artifacts:
+Markdown/JSON remain the source of truth.
+
+Optional deterministic renderers:
 
 ```bash
-# Excel-readable tracker/table; no dependencies
 python scripts/render_csv.py templates/client-review.example.json
-
-# Six-slide PowerPoint
 npm install
 node scripts/render_pptx.mjs templates/client-review.example.json
-
-# Repository contract checks
 python scripts/smoke_test.py
 ```
 
-## Product boundary
+## Successful patterns we reuse
 
-### In v0
+The repo borrows architecture patterns—not copied text—from adopted agent systems:
 
-- web research using the host agent's existing search/browser tools
-- client-file / Drive context when the host provides it
-- deep competitive/product-market intelligence
-- sourced competitor signals
-- B2B/RFQ pricing strategy
-- prospect briefs
-- meeting prep
-- growth recommendations
-- client-review narratives
-- campaign briefs
-- PPTX + Excel-readable CSV export
+- bounded research jobs
+- persistent account context
+- multi-source evidence
+- structured outputs
+- research → compression → synthesis
+- finite tool budgets
+- human approval before execution
 
-### Explicitly not in v0
-
-- autonomous ad execution
-- CRM replacement
-- social scheduler
-- SEO crawler
-- BI dashboard
-- always-on browser infrastructure
-- custom scraping platform
-- multi-agent swarm
-- vector database
-- custom auth / SaaS UI
-
-Those are future options only if an agency repeatedly asks for them and will pay for them.
+See [`docs/SUCCESSFUL_PATTERNS.md`](docs/SUCCESSFUL_PATTERNS.md).
 
 ## Validation target
 
-A v0 run is useful if an agency can take a real prospect/client and, with limited editing, use at least one output in a client-facing workflow:
+The product is useful if an agency can take a real prospect/client and say:
 
-- pitch/proposal preparation
-- client meeting prep
-- competitive/product strategy
-- pricing/commercial discussion
-- competitor update
-- monthly review
-- new campaign recommendation
+> "I knew most of the facts separately. I had not connected them this way, and this changed what I want to pitch or ask."
 
-The core question is not "Is the AI impressive?" It is **"Did this uncover something decision-useful, save the agency time, or help it look materially smarter in front of the client?"**
+That is a better success bar than "the report is long".
 
 ## License
 
-MIT. This repository borrows **patterns**, not copied third-party skill text, from the referenced projects.
+MIT.
