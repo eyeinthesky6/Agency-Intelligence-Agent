@@ -1,0 +1,13 @@
+{
+  "name": "agency-intelligence-agent",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A lightweight skill-based intelligence assistant for agencies.",
+  "type": "module",
+  "scripts": {
+    "render:pptx": "node scripts/render_pptx.mjs"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  }
+}
