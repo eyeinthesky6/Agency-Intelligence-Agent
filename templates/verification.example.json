@@ -1,0 +1,19 @@
+{
+  "run_id": "YYYY-MM-DD-client-slug",
+  "claims": [
+    {
+      "id": "C-001",
+      "claim": "Exact claim checked",
+      "importance": "critical",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://example.com/source"],
+      "evidence_note": "What the source actually establishes",
+      "problem": null,
+      "required_fix": null
+    }
+  ],
+  "missing_claims_added": [],
+  "source_conflicts": [],
+  "broken_or_inaccessible_links": [],
+  "verifier_summary": "Concise summary of what survived and what failed."
+}
