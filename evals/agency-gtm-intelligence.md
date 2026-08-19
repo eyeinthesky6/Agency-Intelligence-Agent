@@ -2,7 +2,10 @@
 
 ## Purpose
 
-Prevent the core failure mode of agency research agents: a long company summary followed by generic recommendations such as "do SEO, social media and paid ads."
+Prevent two common failures:
+
+1. a long company summary followed by generic recommendations such as "do SEO, social media and paid ads";
+2. a smart-sounding GTM story whose facts or interpretation do not survive independent verification.
 
 This eval is harness/model agnostic. Run it with ChatGPT, Codex, Claude, Hermes, Kimi or any other agent that can use the skills and public web/file tools.
 
@@ -18,11 +21,25 @@ examples/kazam-agency-prep/
 
 ## Prompt
 
-> Run `01-prospect-intelligence` for this prospect, then `02-competitor-watch` in DEEP mode and `06-agency-direction`. Build an agency-prep dossier: company GTM, 3–5 competitor marketing/sales playbooks, category/geography patterns, customer archetypes and evidence-backed directions the agency could consider pitching. Do not write finished campaigns or drift into management consulting.
+> Run `01-prospect-intelligence`, `02-competitor-watch` in DEEP mode and `06-agency-direction`. Then run `07-verify-and-challenge` using fresh verifier and challenger contexts when supported. Build an agency-prep dossier covering company GTM, 3–5 competitor marketing/sales playbooks, category/geography patterns, customer archetypes and evidence-backed directions. Reopen and verify material sources, actively search for contrary evidence, reconcile the strategy, and return a terminal evidence receipt. Do not write finished campaigns or drift into management consulting.
 
-## Hard fail
+# Evidence gate — hard fail before scoring
 
-Score `FAIL` if any is true:
+Score `FAIL` regardless of prose quality if any is true:
+
+- no `claims.json` / material claim ledger exists
+- no independent `verification.json` exists
+- no counterfactual challenge was run for a major strategy output
+- no `receipt.json` / explicit terminal state exists
+- the final report presents a critical `UNSUPPORTED` or `CONTRADICTED` claim as fact
+- the Reconciler introduces a new material factual claim without verification
+- a material number/date/current count is cited only from a search snippet when the underlying source was accessible
+- the Producer effectively self-certifies the report without a separate verification objective/context
+- the system retries indefinitely until it finds supporting evidence
+
+# Research-quality hard fail
+
+Also fail if any is true:
 
 - output is mainly a generic company profile
 - competitor section is mostly a feature matrix
@@ -35,9 +52,9 @@ Score `FAIL` if any is true:
 - no material sources are retained
 - output writes the final campaign rather than preparing the agency to decide
 
-## Scoring rubric — 100 points
+# Scoring rubric — 100 points
 
-### 1. Company GTM understanding — 15
+## 1. Company GTM understanding — 12
 
 Strong output identifies:
 
@@ -50,7 +67,7 @@ Strong output identifies:
 - conversion paths
 - partnerships/channels
 
-### 2. Competitor marketing & sales playbooks — 25
+## 2. Competitor marketing & sales playbooks — 18
 
 At least 3 meaningful competitors should be compared across:
 
@@ -63,16 +80,16 @@ At least 3 meaningful competitors should be compared across:
 - partnerships/channel motion
 - geography
 
-High scores explain **what each competitor is trying to achieve through those activities**.
+High scores explain **what each competitor appears to be trying to achieve through those activities**, without claiming success merely from visibility.
 
-### 3. Cross-source synthesis — 20
+## 3. Cross-source synthesis — 15
 
 - 0: one source → one bullet
-- 10: several reasonable inferences
-- 15: at least 3 useful patterns connecting multiple observations
-- 20: patterns materially change what the agency should pitch/investigate and state important uncertainty
+- 7: several reasonable inferences
+- 12: at least 3 useful patterns connecting multiple observations
+- 15: patterns materially change what the agency should pitch/investigate and state important uncertainty
 
-### 4. Category / geography intelligence — 10
+## 4. Category / geography intelligence — 8
 
 Identify evidence-backed recurring GTM patterns such as:
 
@@ -85,7 +102,7 @@ Identify evidence-backed recurring GTM patterns such as:
 
 Do not force geography if it does not matter.
 
-### 5. Customer opportunity map — 10
+## 5. Customer opportunity map — 8
 
 Define 3–6 credible customer/buyer archetypes with:
 
@@ -97,68 +114,153 @@ Define 3–6 credible customer/buyer archetypes with:
 
 Do not substitute a giant lead list.
 
-### 6. Agency strategic usefulness — 15
+## 6. Agency strategic usefulness — 12
 
-Directions should be specific and evidence-backed, e.g.:
+Directions should be specific and evidence-backed, for example:
 
 - buyer/use-case journey architecture
 - case-study/proof engine
 - partner acquisition
 - ABM for a defined account class
 - local/regional GTM
-- category authority/data-led content
+- research/category authority distribution
 - channel/distributor enablement
 
 The agency should be able to use the output to decide what belongs in a pitch.
 
-### 7. Scope discipline & intellectual honesty — 5
+## 7. Evidence verification quality — 15
+
+### 0–5
+Verifier mostly rereads the report or checks citation presence.
+
+### 6–10
+Material numbers/dates/entities are independently reopened and checked; some corroboration is used.
+
+### 11–15
+Verifier:
+
+- independently extracts material claims, including claims omitted by Producer;
+- opens primary/current sources;
+- checks exact number/unit/date/entity support;
+- distinguishes marketing claims from externally established fact;
+- corroborates critical claims when appropriate;
+- records source conflict and broken links;
+- forces material corrections/removals rather than rubber-stamping.
+
+## 8. Counterfactual quality — 8
+
+### 0–2
+Generic criticism/caveats.
+
+### 3–5
+Plausible alternatives are considered and some contrary evidence is searched.
+
+### 6–8
+Challenger actively constructs the strongest alternative explanation, defines distinguishing evidence, searches for it, and **materially changes or strengthens recommendation priority when warranted**.
+
+A counterfactual pass that never changes confidence or strategy across repeated benchmarks should be treated with suspicion.
+
+## 9. Scope discipline & intellectual honesty — 4
 
 - facts vs inference are visible
 - important unknowns become discovery questions
 - no invented performance data
 - no consulting drift
 - no finished campaign generation unless separately requested
+- terminal state accurately reflects remaining uncertainty
 
-## Pass threshold
+# Pass threshold
 
-- **85–100:** strong agency intelligence; pitch-prep ready
-- **70–84:** useful research; needs strategist sharpening
-- **50–69:** competent research assistant, weak strategic synthesis
-- **<50:** Google-summary agent; do not ship
+Only runs that first pass the Evidence Gate are scored.
 
-## Reference Kazam insight shapes
+- **90–100:** strongly verified agency intelligence; pitch-prep ready
+- **80–89:** strong and useful; minor strategist sharpening
+- **70–79:** useful research but meaningful evidence/strategy weakness remains
+- **50–69:** competent research assistant, weak intelligence loop
+- **<50:** Google-summary or unreliable-agent output; do not ship
 
-These examples illustrate the required reasoning shape. They must not be hard-coded as rules.
+A `REVIEW_REQUIRED` run can still score well for intellectual honesty, but it is **not** presentation-ready until the named client/human questions are resolved.
 
-### Example A — partner acquisition pattern
+A `FAILED_EVIDENCE_GATE` run fails regardless of score.
+
+# Reference Kazam benchmark — why the validation stage matters
+
+The Kazam example should be used to test whether the verification loop can **change** a plausible first-run strategy.
+
+## First-run inference A — partner acquisition
 
 ```text
 Statiq franchise/FOCO
 + ChargeZone franchise
 + Bolt distributor program
 + Kazam partner/dealer intake
-→ ecosystem/site/channel acquisition is a recurring category GTM motion
-→ agency should determine whether the prospect needs a dedicated partner journey
+→ partner/site/channel acquisition is a major category growth motion
 ```
 
-### Example B — proof architecture
+Verification found the visible programs are real, but public evidence does not prove their relative revenue/economic importance.
+
+Corrected conclusion:
 
 ```text
-Kazam has quantified product outcomes
-+ Bolt prominently publishes named enterprise case studies
-→ prospect has proof but competitor packages trust more visibly by buyer/use case
-→ agency can investigate a systematic enterprise proof/case-study engine
+partner/site/channel acquisition is a recurring visible GTM motion
+→ validate its economic importance to the prospect before pitching a dedicated partner program
 ```
 
-### Example C — positioning complexity
+## First-run inference B — data-led whitespace
+
+Original:
+
+```text
+Kazam has large operating datasets
+→ data-led category authority is an underused whitespace
+```
+
+Counterfactual evidence found that Kazam already operates EV Ready Homes and a Kazam/AEEE research motion; Bolt also publishes data-rich category material.
+
+Corrected conclusion:
+
+```text
+research capability already exists
+→ investigate whether its distribution/commercial use can become more systematic
+```
+
+## First-run inference C — enterprise-first priority
+
+The public product website made enterprise/CPO/fleet/software opportunities visually prominent.
+
+Fresh management evidence showed tier-2/3 three-wheeler/home charging is a major current revenue engine.
+
+Corrected conclusion:
+
+```text
+separate the core 2W/3W regional/OEM engine from enterprise expansion
+→ do not make an enterprise-only agency pitch without segment economics/pipeline data
+```
+
+This is the behavior the eval rewards: the validation loop is allowed to overturn a clever first answer.
+
+# Reference insight shapes
+
+These illustrate reasoning shape only. They must not be hard-coded as category rules.
+
+### Competitor proof architecture
+
+```text
+prospect has quantified customer outcomes
++ competitor packages named enterprise cases visibly
+→ prospect may have proof that is not organized for buyer-specific selling
+→ agency can investigate proof/case-study architecture, subject to customer permissions
+```
+
+### Positioning complexity
 
 ```text
 prospect serves many buyer types/products
-+ competitors create dedicated pages for individual use cases
-→ breadth may need buyer-specific narrative paths
-→ agency should validate site/pipeline data before proposing a journey restructure
++ competitors create dedicated use-case paths
+→ breadth may create narrative complexity
+→ agency must validate analytics/pipeline/sales feedback before proposing site restructuring
 ```
 
-## Anti-hardcoding rule
+# Anti-hardcoding rule
 
 The skill must discover equivalent patterns from evidence for other categories—leasing, BMS, batteries, SaaS, logistics, manufacturing, professional services, etc.—not reproduce EV-charging conclusions regardless of company.
