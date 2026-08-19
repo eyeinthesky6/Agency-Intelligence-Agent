@@ -1,0 +1,134 @@
+{
+  "run_id": "2026-08-19-kazam-verified",
+  "claims": [
+    {
+      "id": "C-001",
+      "claim": "Kazam publicly presents a broad mobility and energy technology stack spanning charging hardware/software, CPOs, OEMs, fleets, utilities, leasing, properties and related use cases.",
+      "importance": "critical",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://kazam.energy/", "https://kazam.energy/products/ev-charging-management-software", "https://kazam.energy/products/ev-fleet-management-system"],
+      "evidence_note": "Kazam's current primary site lists charging hardware, CMS, energy management, leasing, battery swapping and multiple buyer/use-case groups including CPOs, OEMs, fleets, utilities, leasing, commercial buildings and RWAs.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-002",
+      "claim": "Statiq has an explicit FOCO/franchise and commercial-property partner acquisition journey.",
+      "importance": "critical",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://www.statiq.in/partner-with-us", "https://www.statiq.in/blog/2026/01/12/statiq-launches-its-first-foco-ev-charging-station-in-gurgaon/", "https://www.statiq.in/blog/2026/06/29/ev-charging-station-franchise-india-guide/"],
+      "evidence_note": "Statiq's current partner page explicitly markets an FOCO franchise, property charging and expert conversion path; its January 2026 post documents the first FOCO site and June 2026 guide explains the franchise model.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-003",
+      "claim": "ChargeZone has a public franchise acquisition program and a separate ChargeClub consumer loyalty program.",
+      "importance": "supporting",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://www.chargezone.co.in/franchise", "https://www.chargezone.co.in/chargeclub"],
+      "evidence_note": "ChargeZone directly markets a financed franchise program and separately operates ChargeClub with tiered charging rewards/discounts.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-004",
+      "claim": "Bolt.Earth publicly recruits dealers/distributors/channel partners.",
+      "importance": "critical",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://bolt.earth/become-a-distributor"],
+      "evidence_note": "Bolt.Earth's current primary page explicitly invites distribution/channel partnerships and provides a partner signup funnel.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-005",
+      "claim": "Kazam has a public partner/dealer intake page.",
+      "importance": "critical",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://kazam.energy/become-a-partner"],
+      "evidence_note": "Kazam's current partner page contains a dealer-program form and general partner contact form.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-006",
+      "claim": "Bolt.Earth publishes named enterprise case studies including Optum, Bank of America and SAP.",
+      "importance": "critical",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://bolt.earth/resources/case-studies", "https://bolt.earth/resources/case-studies/optum-ev-charging-sustainable-workplace-transformation", "https://bolt.earth/resources/case-studies/bank-of-america-workplace-ev-charging-india", "https://bolt.earth/resources/case-studies/secure-scalable-ev-charging-network-sap-bangalore"],
+      "evidence_note": "Bolt.Earth's live case-study library and individual case pages name Optum, Bank of America and SAP and describe deployments/outcomes.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-007",
+      "claim": "Kazam publishes quantified product/customer outcome examples that are often anonymized by customer type rather than named client.",
+      "importance": "critical",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://kazam.energy/products/ev-charging-billing-software", "https://kazam.energy/products/energy-management"],
+      "evidence_note": "Kazam product pages show quantified examples such as an 'Oil & Gas Major (Public Sector)', a CPO tariff pilot and a quick-commerce fleet operator with site counts/savings/processing-time figures. The labels shown on these examples are customer types rather than company names.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-008",
+      "claim": "Partner/site/channel acquisition is a major category growth motion for Indian EV charging companies.",
+      "importance": "critical",
+      "status": "PARTIAL",
+      "checked_sources": ["https://www.statiq.in/partner-with-us", "https://www.chargezone.co.in/franchise", "https://bolt.earth/become-a-distributor", "https://kazam.energy/become-a-partner"],
+      "evidence_note": "The evidence strongly verifies that partner/franchise/distributor/dealer acquisition is a recurring visible GTM path across the four companies. Public sources do not establish the relative revenue contribution, conversion quality or strategic importance of these programs for each company.",
+      "problem": "The phrase 'major category growth motion' overstates what public website presence alone proves.",
+      "required_fix": "Reword to: 'Partner/site/channel acquisition is a recurring visible GTM motion across the category; its economic importance to Kazam must be validated internally.'"
+    },
+    {
+      "id": "C-009",
+      "claim": "Data-led category authority is an open GTM whitespace for Kazam.",
+      "importance": "critical",
+      "status": "CONTRADICTED",
+      "checked_sources": ["https://kazam.energy/ev-ready-homes", "https://www.business-standard.com/industry/auto/home-charging-india-ev-energy-demand-kazam-aeee-study-126063000741_1.html", "https://bolt.earth/blog/the-current-state-of-ev-charging-in-india-2026-public-home-and-fleet-networks"],
+      "evidence_note": "Kazam already operates an 'EV Ready Homes' research initiative built on 100,000+ home installations and links to a report with the Alliance for an Energy Efficient Economy. Business Standard reported that joint study in June 2026. Bolt.Earth also publishes data-heavy category explainers.",
+      "problem": "Calling research/category authority an unoccupied whitespace is false/overstated.",
+      "required_fix": "Reframe as an opportunity to productize, repeat and distribute Kazam's existing proprietary-data/research capability more deliberately, if useful to sales/GTM."
+    },
+    {
+      "id": "C-010",
+      "claim": "Kazam's biggest current revenue engine is tier-2/3 India, especially three-wheelers and home charging.",
+      "importance": "critical",
+      "status": "VERIFIED_CORROBORATED",
+      "checked_sources": ["https://economictimes.indiatimes.com/tech/technology/ev-charging-startup-kazam-closes-fy25-at-rs-40-crore-targets-rs-100-crore-run-rate/articleshow/126301559.cms", "https://yourstory.com/2026/01/kazam-leverage-e3w-strategy-expand-e2w-e-buses-ceo", "https://kazam.energy/category/news/kazam-raises-dollar6.2m-to-scale-ev-charging-infrastructure"],
+      "evidence_note": "Economic Times quotes Kazam's CEO saying tier-2/3 cities are the biggest revenue generator and home charging for three-wheelers is the biggest revenue driver. YourStory separately reports that roughly 70% of top-line growth comes from three-wheelers and describes deep Tier-II/III reach. Kazam's own funding post describes home charging and 2W/3W OEM partnerships as foundational to its expansion.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-011",
+      "claim": "Kazam already participates in data-led category research, including a 2026 home-charging study with AEEE.",
+      "importance": "critical",
+      "status": "VERIFIED_CORROBORATED",
+      "checked_sources": ["https://kazam.energy/ev-ready-homes", "https://www.business-standard.com/industry/auto/home-charging-india-ev-energy-demand-kazam-aeee-study-126063000741_1.html"],
+      "evidence_note": "Kazam's own EV Ready Homes page explicitly references a Kazam/AEEE report; Business Standard independently reported the joint study and headline findings in June 2026.",
+      "problem": null,
+      "required_fix": null
+    },
+    {
+      "id": "C-012",
+      "claim": "Kazam's public website currently shows 148K+ chargers onboarded, 8.83M+ charging sessions managed and 124GWh+ energy enabled.",
+      "importance": "supporting",
+      "status": "VERIFIED_PRIMARY",
+      "checked_sources": ["https://kazam.energy/"],
+      "evidence_note": "These figures are displayed directly on Kazam's current homepage as of the verification date.",
+      "problem": null,
+      "required_fix": null
+    }
+  ],
+  "missing_claims_added": [
+    "Kazam's current revenue mix is much more three-wheeler/home-charging/tier-2/3 weighted than the Producer's enterprise-heavy agency narrative implied.",
+    "Kazam already has an active research/category-authority motion through EV Ready Homes and the AEEE collaboration."
+  ],
+  "source_conflicts": [
+    "Public network/count figures for charging companies change frequently and differ across dates/sources. The final GTM narrative should use current company-site numbers only when the exact count is strategically necessary, and preserve the as-of date."
+  ],
+  "broken_or_inaccessible_links": [],
+  "verifier_summary": "Most concrete competitor-GTM observations are well supported by primary pages. Two strategic interpretations required correction: partner acquisition is visibly recurring but not proven to be economically major, and data-led category authority is not a blank whitespace because Kazam already runs this motion. Independent revenue evidence also reveals that the original agency direction underweighted Kazam's current three-wheeler/home-charging/tier-2/3 engine."
+}
