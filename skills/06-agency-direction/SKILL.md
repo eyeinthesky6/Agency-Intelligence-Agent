@@ -1,30 +1,48 @@
 ---
 name: agency-direction
-description: Synthesize company intelligence, competitor GTM playbooks, market/geography patterns and GTM opportunities into an agency-facing strategic direction brief. Use after research to help the agency decide what to pitch, which audiences/channels/themes deserve attention, and what needs client validation before a proposal.
+description: Synthesize company intelligence, competitor GTM playbooks, market/geography patterns and GTM opportunities into an agency-facing strategic direction brief. Use after research to help the agency decide what to pitch, which audiences/channels/themes deserve attention, and what needs client validation before a proposal. The first direction brief is a draft until verify-and-challenge issues a verification receipt.
 ---
 
 # Agency Direction Brief
 
 ## Goal
 
-Produce the final **prep artifact for the agency**.
+Produce the core **prep artifact for the agency**.
 
 This is not client-ready copy, not a campaign generator, and not a consulting report. It tells the agency what the research suggests and gives it the raw strategic material to build its own pitch/proposal/content plan.
 
+**Important:** this skill produces an agency-direction **draft**. It becomes a verified final only after `07-verify-and-challenge` completes.
+
 ## Read first
+
+Prefer verified upstream material when available:
 
 - `client-context.md`
 - latest prospect/company intelligence
 - latest competitor GTM intelligence
+- verification receipts/reports from upstream research
 - latest GTM opportunities
 - relevant current signals
 - agency service capabilities/constraints when provided
 
-## Output
+If upstream research has not been verified, preserve that limitation explicitly and include its material claims in this run's claim ledger.
 
-Create:
+# Output
 
-`clients/<slug>/outputs/agency-direction-YYYY-MM-DD.md`
+Use the active run directory:
+
+```text
+clients/<slug>/outputs/<run-id>/
+```
+
+Write/update:
+
+```text
+draft.md
+claims.json
+```
+
+Do not label the draft final or verified.
 
 ## 1. The account story
 
@@ -39,15 +57,24 @@ A concise narrative answering:
 
 This should read like a strategist's synthesis, not a list of URLs.
 
+Separate:
+
+- verified public fact
+- external company/competitor claim
+- agency inference/hypothesis
+- internal-data question
+
 ## 2. Competitive GTM read
 
 Summarize:
 
-- table-stakes motions
-- strongest competitor playbooks
+- table-stakes/recurring visible motions
+- strongest competitor precedents
 - overused/noisy tactics
-- white spaces
+- white-space **hypotheses**
 - any competitor the agency should study especially closely and why
+
+Do not describe a tactic as successful merely because it is visible.
 
 ## 3. Audience / customer opportunity map
 
@@ -68,10 +95,11 @@ For each:
 - **Audience**
 - **Why now**
 - **Evidence**
-- **Relevant competitor precedent / white space**
+- **Relevant competitor precedent / white-space hypothesis**
 - **Possible channels/assets** — examples, not finished campaign plans
 - **What success would need to mean** — client must provide actual KPI/target
 - **Confidence**
+- **Counterfactual risk** — one sentence on what could make this direction wrong
 
 ## 5. What the agency could pitch
 
@@ -101,6 +129,7 @@ Examples:
 - "SEO" with no search/use-case hypothesis
 - broad paid media with no audience/conversion logic
 - expensive content machine without a buying journey
+- a competitor tactic whose economic importance is unverified
 
 ## 7. Questions before proposal
 
@@ -117,6 +146,8 @@ Examples:
 - marketing budget / constraints
 - sales capacity / follow-up process
 
+Use questions to close gaps that public research cannot legitimately infer.
+
 ## 8. Agency pitch inputs
 
 End with a concise block that the agency can lift into its own planning:
@@ -128,13 +159,51 @@ End with a concise block that the agency can lift into its own planning:
 - **Top competitor to benchmark**
 - **Biggest unknown**
 
-## Quality gate
+# Claim ledger requirement
 
-The brief should let an agency partner/strategist decide what to put in a pitch without forcing them to reread the full research dossier.
+Every material factual foundation and strategic inference in the direction brief must appear in `claims.json`, including:
 
-It must remain explicit about which conclusions are evidence vs inference.
+- company revenue/scale/current priority claims used to rank the pitch
+- competitor activity and proof claims
+- geography/category patterns
+- statements about what is table stakes
+- white-space claims
+- claims that a channel/motion appears important
+- major customer-segment conclusions
 
-## Scope boundary
+For strategic inferences, the ledger should cite the factual premises and classify `kind` as `inference`.
+
+# Mandatory next step
+
+Run:
+
+> `07-verify-and-challenge`
+
+The Verifier must independently reopen/check material evidence. The Challenger must actively search for competing explanations and contrary evidence.
+
+The reconciled output becomes:
+
+```text
+final.md
+verification.json
+counterfactual.md
+receipt.json
+```
+
+Only `final.md` with an accepted receipt should be treated as the verified agency-prep artifact.
+
+# Quality gate
+
+Before verification:
+
+- Can an agency partner/strategist decide what to explore in a pitch without rereading the whole dossier?
+- Are facts and inferences visibly separate?
+- Are public-data unknowns turned into discovery questions rather than invented answers?
+- Are the strongest 3–5 directions included rather than a service menu?
+- Does every major direction have a plausible counterfactual risk?
+- Are all material foundations in `claims.json`?
+
+# Scope boundary
 
 No:
 
