@@ -1,46 +1,39 @@
-# Architecture — v0.1
+# Architecture — v0.2
 
 ## Design goal
 
-Agency Intelligence Agent is a **portable intelligence layer**, not a SaaS application yet.
+Agency Intelligence Agent is a **portable research and GTM intelligence layer for agencies**, not a SaaS application and not a business-consulting suite.
 
-The host agent (Codex, Claude Code, ChatGPT with tools, Cursor, etc.) supplies reasoning and whatever web/file tools it already has. This repository supplies the **agency-specific operating method, memory format, and artifacts**.
+The host agent (ChatGPT, Codex, Claude, Hermes, Kimi, Cursor, etc.) supplies reasoning and whatever web/file tools it already has. This repository supplies the agency-specific research method, memory format, skill contracts and artifacts.
 
 ## System
 
 ```text
-                           ┌────────────────────┐
-                           │ Client / Prospect  │
-                           │ files + URLs       │
-                           └─────────┬──────────┘
-                                     │
-                                     v
-                         ┌──────────────────────┐
-                         │ client-context.md    │
-                         │ durable human memory │
-                         └─────────┬────────────┘
-                                   │
-             ┌─────────────────────┼──────────────────────┐
-             │                     │                      │
-             v                     v                      v
-     prospect intelligence  competitor watch       meeting prep
-             │                     │                      │
-             └──────────────┬──────┴──────────────┬───────┘
-                            │                     │
-                            v                     v
-                      signals.jsonl          actions.json
-                            │                     │
-                            └──────────┬──────────┘
-                                       v
-                           growth opportunities
-                                       │
-                           ┌───────────┴───────────┐
-                           v                       v
-                    campaign brief          client review
-                                                   │
-                                      ┌────────────┴────────────┐
-                                      v                         v
-                                  Markdown                 PPTX / CSV
+Client / Prospect files + URLs
+            ↓
+     client-context.md
+            ↓
+   prospect intelligence
+  (company + current GTM)
+            ↓
+ competitor GTM intelligence
+  (marketing/sales playbooks)
+            ↓
+category + geography patterns
+            ↓
+ customer/audience opportunity map
+            ↓
+    GTM opportunities
+            ↓
+   agency direction brief
+            ↓
+ pitch / strategy decisions made by agency
+```
+
+Recurring use adds:
+
+```text
+competitor watch → signals.jsonl → meeting prep / client review
 ```
 
 ## Canonical client workspace
@@ -56,48 +49,44 @@ clients/<slug>/
 
 ### `client-context.md`
 
-Human-readable durable context: business, offer, ICP/audience, positioning, proof, competitors, brand voice, goals, known metrics, current campaigns, constraints, and open questions.
+Human-readable durable context:
+
+- company/business
+- products/services
+- target audiences/customer types
+- geography
+- positioning
+- proof
+- competitors
+- visible/current GTM
+- agency scope/goals when known
+- constraints
+- open questions
 
 ### `signals.jsonl`
 
-Append-only event memory. One JSON object per line.
+Append-only GTM event memory.
 
-Minimum schema:
+Example:
 
 ```json
 {
   "observed_at": "YYYY-MM-DD",
-  "entity": "Name",
-  "type": "pricing_change",
-  "fact": "Verifiable observation",
+  "entity": "Competitor",
+  "type": "gtm_move",
+  "fact": "Launched a dedicated distributor program and city-specific recruitment pages",
   "source_url": "https://...",
   "confidence": "high",
-  "impact": "Why this matters to the client",
-  "recommended_action": "Optional justified action"
+  "impact": "Shows channel acquisition becoming a structured category motion",
+  "recommended_action": "Check whether channel recruitment is a priority audience for the client"
 }
 ```
 
 ### `actions.json`
 
-Small action register. Suggested schema:
+Optional agency action register for proposed/approved GTM work.
 
-```json
-[
-  {
-    "id": "A-001",
-    "created_at": "YYYY-MM-DD",
-    "action": "Test new comparison landing page",
-    "why": "Competitor adopted client's core positioning",
-    "priority": "high",
-    "owner": "Unassigned",
-    "status": "proposed",
-    "evidence": ["source URL"],
-    "source_signal_ids": []
-  }
-]
-```
-
-Allowed status values in v0:
+Allowed status values:
 
 - `proposed`
 - `approved`
@@ -107,38 +96,76 @@ Allowed status values in v0:
 
 ## Skill execution contract
 
-Every skill follows the same internal shape:
+Every research skill follows:
 
 ### 1. Load context
-Read the minimum relevant client files first.
+Read available client/company material before searching.
 
-### 2. Define the question
-Do not browse until the decision/output is explicit.
+### 2. Define the agency question
+Examples:
 
-### 3. Plan
-For research-heavy tasks, define 2–5 focused questions or checks.
+- What does this company appear to be doing to acquire customers?
+- How are competitors going to market?
+- What works in this geography/category?
+- Which customer archetypes are worth investigating?
+- What should an agency consider pitching?
+
+### 3. Plan research surfaces
+Choose only relevant sources: website, use-case pages, case studies, social/PR, partner pages, events, competitor sites, geography/category evidence.
 
 ### 4. Gather evidence
-Use host web/file tools. Retain source URLs and dates.
+Keep URLs/dates and distinguish company claims from independent evidence.
 
 ### 5. Normalize
-Convert observations into structured facts/signals.
+Capture structured observations:
 
-### 6. Compress
-Remove repeated/noisy facts. Rank by relevance to the client.
+- audience
+- positioning
+- proof
+- acquisition motion
+- conversion path
+- channel/partner motion
+- geography
+- content/search activity
 
-### 7. Interpret
-Use `Fact → Impact → Act`.
+### 6. Cross-source synthesis
+Connect multiple observations into a GTM implication.
 
-### 8. Deliver
-Create a concise Markdown artifact and update memory only where warranted.
+### 7. Compare
+Identify:
 
-### 9. Stop
-Do not keep researching after the decision is supported.
+- table stakes
+- strong competitor playbooks
+- repeated category patterns
+- white spaces
+- unsupported/noisy tactics
 
-## Interfaces, not infrastructure
+### 8. Translate for agency
+Convert evidence into a few GTM/marketing directions and questions to validate.
 
-A skill may conceptually request:
+### 9. Deliver artifact
+Create a sourced Markdown/JSON artifact.
+
+### 10. Stop
+Stop when additional research no longer changes the GTM story.
+
+## Research depth defaults
+
+| Task | Default |
+|---|---:|
+| Main competitors | 3–5 |
+| Useful company pages/sources | 5–10 |
+| Competitor surfaces | 3–6 each |
+| Customer archetypes | 3–6 |
+| Agency GTM directions | 3–5 |
+| Discovery questions | ≤10 |
+| Meeting brief | ~1 page |
+
+These are stopping guides, not hard evidence quotas.
+
+## Tool interfaces
+
+Skills may conceptually request:
 
 - `search_web(query)`
 - `fetch_url(url)`
@@ -146,51 +173,49 @@ A skill may conceptually request:
 - `search_drive(query)`
 - `write_output(path, content)`
 
-But v0 does not implement these services. The host environment maps them to available tools.
-
-This keeps the repo portable.
-
-## Research budgets
-
-Default maximums unless the user changes them:
-
-| Task | Default budget |
-|---|---:|
-| Competitors per scan | 5 |
-| Focused web queries | 5 |
-| Pages per competitor | 4 |
-| Primary recommendations | 3 |
-| Meeting brief length | 1 page-ish |
-| Client review deck | 6 slides |
-
-Budgets exist to stop research agents turning every question into a thesis.
+The repository does not implement these services. The host environment maps them to available tools.
 
 ## Failure modes
 
-### Missing context
-Proceed with public information, label assumptions, and list the minimum missing inputs that would improve the result.
+### Search-summary syndrome
 
-### Source inaccessible
-Record the limitation and use another credible source. Do not fabricate the missing content.
+**Failure:** report restates one source at a time.
 
-### Conflicting sources
-Prefer the authoritative/current source and explicitly record the conflict when material.
+**Fix:** require cross-source patterns and agency implications.
 
-### No meaningful change
-Return "No material change found". This is a valid successful run.
+### Feature-table syndrome
 
-### Too many opportunities
-Rank and return three. Put the rest in a short parking-lot section only if unusually important.
+**Failure:** competitor comparison lists product features.
+
+**Fix:** compare positioning, audiences, proof, acquisition, conversion, channels and geography.
+
+### Generic-agency syndrome
+
+**Failure:** recommendations are "SEO, social, paid ads, content."
+
+**Fix:** require who/why/channel/job/evidence and competitor/category precedent.
+
+### Consulting drift
+
+**Failure:** agent starts recommending margins, finance, product engineering, org design or business restructuring.
+
+**Fix:** stop and mark as out of scope. This repo owns marketing/sales GTM research.
+
+### Lead-list dumping
+
+**Failure:** hundreds of company names without rationale.
+
+**Fix:** define customer archetypes and buying triggers first; add illustrative accounts only after.
 
 ## Future architecture triggers
 
-Add infrastructure only when validation produces a repeated pain:
+Add infrastructure only after repeated user pain:
 
-- **Database:** agency has enough clients/signals that files become operationally painful.
-- **Scheduler:** agencies repeatedly ask for automatic weekly delivery.
-- **Browser service:** host web tools cannot access critical sources reliably.
-- **Drive adapter:** repeated manual file movement becomes a blocker.
-- **Dashboard:** agencies repeatedly ask for cross-client visibility that artifacts cannot satisfy.
-- **Execution connectors:** agencies trust recommendations and explicitly want approved actions pushed into ad/CRM/content systems.
+- **Database:** files become operationally painful across many clients.
+- **Scheduler:** agencies want automatic weekly competitor/market briefs.
+- **Browser service:** host search tools repeatedly miss necessary public surfaces.
+- **Drive adapter:** manual client-file movement becomes a blocker.
+- **Dashboard:** agencies need cross-client portfolio views.
+- **CRM/ad/content connectors:** only after agencies explicitly want approved intelligence pushed into execution systems.
 
-Until then, files + skills remain the architecture.
+Until then: **skills + files + host tools**.
