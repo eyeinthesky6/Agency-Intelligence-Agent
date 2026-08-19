@@ -2,65 +2,98 @@
 
 ## Mission
 
-Build the smallest useful intelligence assistant for agencies.
+Build the smallest useful **research and GTM intelligence layer for marketing/sales agencies**.
 
-The product helps an agency become better prepared, faster: understand a client, research a prospect, uncover non-obvious commercial insights, investigate product/market/pricing/competitor moves, prepare meetings, recommend a few actions, and package the result into familiar client-ready artifacts.
+The primary user is an agency strategist, founder, account lead or salesperson preparing to understand, pitch or advise a client/prospect.
+
+The agent should answer:
+
+> What does this company do, who buys it, how does it appear to go to market, what are competitors doing to acquire and convert customers, what works in this market/geography, which customer groups matter, and what GTM/marketing directions should the agency investigate or pitch?
 
 ## Prime directive
 
-**Do not make this project more sophisticated unless a real user problem requires it.**
+**Research deeply enough to find useful patterns; do not drift into management consulting or content generation.**
 
 When choosing between:
 
-- prompt/skill vs service → choose prompt/skill
+- company/competitor GTM evidence vs generic advice → choose evidence
+- cross-source synthesis vs search-summary prose → choose synthesis
+- agency prep vs finished campaign → choose agency prep
+- marketing/sales GTM vs finance/ops/product-engineering consulting → choose GTM
 - markdown/JSON vs database → choose markdown/JSON
-- host-provided web search vs custom crawler → choose host-provided search
-- one agent with tools vs agent swarm → choose one agent
-- deterministic script vs another LLM call → choose deterministic script
-- explicit user approval vs autonomous execution → choose user approval
-- understandable artifact vs impressive architecture → choose artifact
+- host-provided web/file tools vs custom crawler → choose host tools
+- one agent with skills vs agent swarm → choose one agent
+- deterministic renderer vs another LLM call → choose deterministic renderer
 
 ## Product contract
 
-Every workflow should follow:
+Core workflow:
 
 ```text
-CONTEXT → QUESTION → PLAN → RESEARCH → EVIDENCE → SYNTHESIS → ACTION → ARTIFACT
+COMPANY CONTEXT
+      ↓
+COMPANY GTM RESEARCH
+      ↓
+COMPETITOR MARKETING / SALES PLAYBOOKS
+      ↓
+CATEGORY + GEOGRAPHY PATTERNS
+      ↓
+CUSTOMER / AUDIENCE OPPORTUNITY MAP
+      ↓
+AGENCY GTM DIRECTIONS
+      ↓
+AGENCY PREP ARTIFACT
 ```
 
-A useful result must answer:
+A useful run must answer:
 
-1. What did we learn?
-2. What evidence supports it?
-3. What **new conclusion follows from combining the evidence**?
-4. Why does it matter to this specific client/prospect?
-5. What should the agency/company do next?
-6. What must management verify before acting?
-7. What can be handed to a human/client?
+1. What did we learn about the company?
+2. How does it appear to sell/acquire trust today?
+3. What are competitors doing differently?
+4. What repeated GTM patterns are visible in the category/geography?
+5. Which customer/buyer archetypes are relevant?
+6. What could the agency credibly propose or investigate?
+7. Which conclusions are facts vs inference?
+8. What must be asked before a proposal is finalized?
 
-## Non-goals for v0
+## Explicit scope boundary
 
-Do not add any of these unless the user explicitly changes scope:
+### In scope
 
-- database
-- vector database
-- embeddings pipeline
-- web app/dashboard
-- authentication
-- queues/workers
-- Redis
-- Docker requirement
-- LangGraph/CrewAI/AutoGen or another orchestration framework
-- custom browser automation
-- always-on crawler
-- social/ad execution APIs
-- autonomous outbound
-- multi-agent personas
-- long-term semantic memory infrastructure
+- company research
+- competitor marketing/GTM research
+- positioning and messaging analysis
+- website/conversion-path analysis
+- SEO/content strategy patterns
+- social/founder/PR patterns
+- partnerships/ecosystem/channel analysis
+- events/community/franchise/dealer/distributor GTM
+- geography/local-market patterns
+- use-case/customer-segment research
+- target-customer archetypes and illustrative accounts
+- public offers/pricing only as marketing/positioning evidence
+- sales-enablement/proof/case-study gaps
+- agency pitch directions
+- meeting prep and recurring competitor watch
+
+### Out of scope for this repo
+
+- corporate pricing strategy / margin design
+- working-capital or finance consulting
+- product engineering roadmap
+- manufacturing/process consulting
+- org redesign
+- M&A / valuation
+- legal/compliance advice
+- detailed operating-model consulting
+- finished social posts / ads / articles by default
+- autonomous campaign execution
+
+A separate consulting agent/repository can own business, pricing and product-management consulting later.
 
 ## Memory
 
-The source of truth for a client is:
+The source of truth for a client/prospect is:
 
 ```text
 clients/<slug>/client-context.md
@@ -69,199 +102,149 @@ clients/<slug>/actions.json
 clients/<slug>/outputs/
 ```
 
-Never invent missing client facts. Mark them `Unknown` or `Assumption`.
+Never invent missing client facts. Mark them `Unknown`, `Assumption` or `Inference`.
 
-A public-source claim must retain its source URL and observation date.
+Every material public-source claim should retain a URL/date/context.
 
 ## Research discipline
 
-### Search less, synthesize better
+### First page of Google is the start, not the deliverable
 
-Default research budget for a normal run:
-
-- named competitors: maximum 5 unless the user asks for more
-- sources per important claim: target 2 when practical
-- focused market/category searches: maximum 5 before re-planning
-- recommendations: maximum 3 primary actions for normal workflow; DEEP competitive mode may return up to 5
-
-A DEEP investigation may exceed these budgets when new sources are materially changing the thesis, but source count is never a quality metric.
-
-Stop when additional sources repeat the same commercial story.
-
-### Search snippets are not insights
-
-A deep insight must normally combine **two or more pieces of evidence**.
-
-Use this structure:
-
-```text
-Evidence A
-+ Evidence B
-(+ Evidence C if useful)
-→ Inference
-→ Commercial implication
-→ What would falsify / verify it
-```
+A useful agency insight normally combines multiple observations.
 
 Example:
 
 ```text
-Large new order relative to revenue
-+ already-stretched inventory/receivable cycle
-→ growth may create a financing constraint
-→ price working capital / volume / inventory terms into the contract
-→ verify actual payment, forecast and safety-stock terms
+Competitors have dedicated franchise funnels
++ publish investor/how-to education
++ announce local station expansion
+→ site/investor acquisition is a deliberate category GTM motion
+→ agency should evaluate whether the prospect needs a separate partner-acquisition journey
 ```
 
-Do not disguise a public fact as a proprietary insight.
+A single sourced fact is evidence, not an insight.
 
-### Prefer deltas for recurring research
+### Research surfaces
 
-For recurring intelligence, compare against existing signals/context and report **what changed**. Do not repeatedly generate generic competitor profiles.
+For a new prospect/company, consider:
 
-### Fact → Impact → Act
+- company website/products/use cases
+- customer logos/case studies
+- partner/channel pages
+- social/LinkedIn/company/founder activity
+- blogs/search footprint
+- press/news/funding only when it reveals GTM direction
+- competitor websites
+- competitor landing pages/use-case pages
+- events/webinars/exhibitions
+- distributor/franchise/dealer programs
+- apps/marketplaces/community/loyalty programs
+- geography/city/state expansion
+- public reviews when buyer objections matter
 
-For important intelligence use:
-
-- **Fact:** verifiable observation
-- **Impact:** why it matters to this client, campaign, product, pitch, contract, or deal
-- **Act:** a specific recommended next move
-
-If there is no credible Impact, it is probably noise.
-If there is no justified Act, do not manufacture one.
+Do not research a source category merely to fill a checklist.
 
 ### Confidence
 
-Use only:
+Use:
 
-- `high` — directly verified from an authoritative/current source
-- `medium` — credible but indirect or only one reasonable source
-- `low` — inference, ambiguous, stale, or weakly sourced
+- `high` — direct/current authoritative evidence
+- `medium` — credible pattern/inference with reasonable support
+- `low` — weak, stale or ambiguous inference
 
-Never convert a competitor's marketing claim into a verified product fact without saying it is a claim.
+### Stop rule
 
-## Industrial / B2B rule
+Stop when additional sources stop changing the GTM story.
 
-For manufacturing and B2B companies, do not default to consumer-marketing advice.
+Depth is **better synthesis**, not 100 browser tabs.
 
-Explicitly examine where relevant:
+## Competitor analysis rule
 
-- revenue/margin/cash economics
-- order/customer concentration
-- capacity and utilization
-- legacy vs emerging product families
-- process substitutes (machining, forging, casting, import, in-house, etc.)
-- qualification / switching costs
-- application engineering
-- distribution / direct OEM / Tier-1 / dealer / export channels
-- pricing architecture and commercial terms
-- tooling/NRE
-- raw-material/FX pass-through
-- inventory / receivables / payment terms
-- localization / import substitution
-- certifications and technical proof
+Competitor intelligence must explain:
 
-Marketing recommendations should reduce sales friction, create qualified applications, expand accounts or improve pricing power.
+- what each competitor wants the market to believe
+- who it targets
+- how it attracts traffic/attention
+- how it builds trust
+- how it converts interest
+- how it uses partners/channels/geography
+- what is table stakes vs differentiated
 
-Good industrial marketing assets include:
+Feature tables alone are insufficient.
 
-- technical case studies
-- application landing pages
-- conversion / TCO calculators
-- RFQ qualification tools
-- design guides
-- localization/import-substitution proof
-- account battlecards
-- prototype/sample programs
-- target-account campaigns
+## Customer opportunity rule
 
-A content calendar is not a strategy by default.
+Do not dump hundreds of leads.
 
-## Pricing discipline
+First identify customer archetypes:
 
-Never guess a private/custom industrial price merely because the user asked for pricing.
+- who
+- buying trigger
+- job/problem
+- likely decision maker
+- evidence they exist
+- route to reach/influence them
 
-If list prices do not exist, build:
+Illustrative accounts may be added only after the archetype is credible.
 
-- customer economic alternative
-- seller cost-to-serve
-- tooling/NRE economics
-- volume assumptions
-- working-capital burden
-- contract-term risks
-- pricing corridor
-- negotiation architecture
+## Agency direction rule
 
-Separate exact facts from scenarios.
+Recommendations should look like:
 
-## Tool policy
+- enterprise proof/case-study engine
+- partner acquisition funnel
+- use-case landing-page architecture
+- local/tier-2/3 GTM
+- account-based marketing
+- category education/search ownership
+- founder/category authority
+- referral/customer advocacy
+- channel/distributor enablement
 
-Use tools already available in the host environment first:
+Not:
 
-- web search / URL fetch
-- connected Drive / file tools
-- spreadsheets / slides tooling
-- Python for deterministic transforms
+- "post more"
+- "do SEO"
+- "run ads"
+- "improve brand awareness"
 
-Adapter code belongs behind a tiny interface and is optional. Core skills must remain usable without a specific vendor.
+unless evidence says **who, why, where and what job it serves**.
 
 ## Execution boundary
 
-v0 may **recommend and draft**.
+The repository researches, analyzes, recommends and prepares artifacts.
 
-v0 must not automatically:
+It does not automatically:
 
-- spend money
-- launch/pause ads
 - publish content
-- send outbound emails/messages
-- modify CRM records
-- make irreversible client changes
+- launch ads
+- spend money
+- contact prospects
+- modify CRM
+- change client systems
 
-The human approves execution.
+The agency decides what to execute.
 
 ## Artifact policy
 
-Canonical outputs are Markdown/JSON because they are portable and inspectable.
+Canonical outputs are Markdown/JSON.
 
-Optional renderers may create:
+Optional renderers may produce spreadsheet/PPT artifacts for agency/client use.
 
-- `.csv` action/signal/review tables that open in Excel/Google Sheets
-- `.pptx` short client review/pitch decks
-
-A host with native spreadsheet support may create richer `.xlsx` files from the same canonical JSON.
-
-Keep decks short. Default: 6 slides.
-Keep spreadsheets decision-oriented. Avoid decorative complexity.
-
-## Skill design
-
-Each skill should have:
-
-1. clear trigger/use case
-2. inputs it expects
-3. files/context it should read first
-4. finite workflow
-5. required evidence discipline
-6. exact output schema/location
-7. quality gate
-8. explicit stop condition
-
-Do not create a new skill if an existing skill can absorb the use case with one small section.
+Keep artifacts decision-oriented and source-backed.
 
 ## Quality gate
 
-Before considering a run complete:
+Before finishing a major prospect intelligence run:
 
-- Does every important external claim have a source?
-- Did we separate facts from inference?
-- For DEEP work, did we actually synthesize multiple facts into non-obvious conclusions?
-- Is the output specific to the client's economics, product and buying process?
-- Did we avoid generic marketing advice?
-- Did we consider substitutes/status quo, not only named rivals?
-- If pricing matters, did we address contract/cash economics rather than fake list prices?
-- Are recommendations few and executable?
-- Did we state what management needs to verify?
-- Is there a usable artifact?
+- Is there a proper company GTM profile?
+- Are 3–5 competitors studied for marketing/sales motion?
+- Are there at least 3 cross-source insights?
+- Is geography/category behavior addressed where relevant?
+- Are customer archetypes identified?
+- Are recommendations agency/marketing scoped?
+- Are generic service recommendations rejected?
+- Are important unknowns surfaced as questions?
+- Could an agency strategist use this to build a better pitch?
 
-If yes, stop. Do not polish indefinitely.
+If not, the run is incomplete.
