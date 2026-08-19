@@ -1,6 +1,6 @@
 ---
 name: prospect-intelligence
-description: Build a detailed company and go-to-market intelligence dossier for an agency before a pitch or strategy discussion. Research what the company sells, who buys it, how it appears to acquire customers, how it positions itself, what competitors are doing in market, which geographies and customer segments matter, and where an agency could credibly improve GTM or marketing.
+description: Build a detailed company and go-to-market intelligence dossier for an agency before a pitch or strategy discussion. Research what the company sells, who buys it, how it appears to acquire customers, how it positions itself, what competitors are doing in market, which geographies and customer segments matter, and where an agency could credibly improve GTM or marketing. Major runs produce an auditable draft and claim ledger that must pass verify-and-challenge before being treated as final.
 ---
 
 # Prospect Intelligence — Agency Prep
@@ -140,7 +140,7 @@ A useful insight should normally connect more than one observation.
 
 Good:
 
-> Competitors are building dedicated franchise-investor landing pages + publishing economics/how-to content + using local expansion announcements → the category is not only selling charging to drivers; it is also recruiting capital/site partners. The prospect's generic partner form may therefore under-convert this audience.
+> Competitors are building dedicated franchise-investor landing pages + publishing economics/how-to content + using local expansion announcements → the category is not only selling charging to drivers; it is also recruiting capital/site partners. The prospect may therefore need to investigate whether this is a priority audience.
 
 Bad:
 
@@ -153,19 +153,31 @@ For important insights show:
 - **Agency implication**
 - **What should be verified with the prospect**
 
-# Output
+# Mandatory auditable output
 
-Save:
+A new research run is **not final**.
 
-`clients/<prospect>/outputs/prospect-intelligence-YYYY-MM-DD.md`
+Create a run directory:
+
+```text
+clients/<prospect>/outputs/<YYYY-MM-DD-run-slug>/
+```
+
+Write:
+
+```text
+draft.md
+claims.json
+```
+
+## `draft.md`
 
 Use this structure:
 
-## 1. Agency executive brief
+### 1. Agency executive brief
 5–8 bullets maximum.
 
-## 2. Company GTM snapshot
-
+### 2. Company GTM snapshot
 - company / category / scale
 - products/services
 - geography
@@ -175,29 +187,24 @@ Use this structure:
 - proof points
 - visible CTAs / conversion paths
 
-## 3. Current marketing & sales footprint
-
+### 3. Current marketing & sales footprint
 Explain what the company is actually doing today across website, content, partnerships, social/PR, events, channels and conversion.
 
-## 4. Competitor GTM comparison
+### 4. Competitor GTM comparison
 
 | Competitor | Positioning | Core buyer/use case | Marketing motion | Proof/assets | Conversion path | Geography/channel angle | What stands out |
 |---|---|---|---|---|---|---|---|
 
-## 5. What appears to work in this market/geography
-
+### 5. What appears to work in this market/geography
 3–6 evidence-backed patterns.
 
-## 6. Customer opportunity map
-
+### 6. Customer opportunity map
 3–6 target customer archetypes with triggers and outreach/marketing routes.
 
-## 7. White spaces / agency hypotheses
-
+### 7. White spaces / agency hypotheses
 Maximum 5.
 
 For each:
-
 - Evidence
 - Hypothesis
 - Marketing/GTM direction
@@ -207,19 +214,44 @@ For each:
 
 These are directions for the agency, **not finished campaigns or content**.
 
-## 8. Suggested pitch themes
-
+### 8. Suggested pitch themes
 3–5 themes the agency could choose from when building its own pitch.
 
 Do not draft the final proposal unless asked separately.
 
-## 9. Discovery questions
-
+### 9. Discovery questions
 Questions that validate the most important unknowns: channel contribution, target segments, sales cycle, lead quality, partner strategy, geographic priorities, marketing ownership and constraints.
 
-## 10. Sources
-
+### 10. Sources
 Keep source URLs for material claims.
+
+## `claims.json`
+
+Add every material factual claim and every strategic inference that materially changes an agency recommendation.
+
+Required fields:
+
+```json
+{
+  "id": "C-001",
+  "claim": "Exact claim",
+  "kind": "fact | number | date | comparison | inference",
+  "importance": "critical | supporting",
+  "source_urls": ["https://..."],
+  "as_of": "YYYY-MM-DD",
+  "producer_confidence": "high | medium | low"
+}
+```
+
+Do not hide difficult claims by omitting them from the ledger. The Verifier will independently extract claims from the draft too.
+
+# Mandatory next step
+
+After producing the draft:
+
+> Run `07-verify-and-challenge` on this run directory using fresh verifier and counterfactual contexts where supported.
+
+Do not present `draft.md` as a verified final dossier.
 
 # Research depth
 
@@ -229,11 +261,11 @@ Default:
 - competitors: 3–5 competitors, 3–6 useful surfaces each
 - category/geography: enough evidence to establish recurring patterns
 
-Stop when further browsing repeats the same GTM story.
+Stop when further browsing repeats the same GTM story. Verification and counterfactual search happen in the next skill.
 
 # Quality gate
 
-Before finishing:
+Before handing the draft to verification:
 
 - Does the brief describe **how the company appears to sell**, not just what it sells?
 - Does it compare competitor **marketing/GTM activity**, not just features?
@@ -241,6 +273,7 @@ Before finishing:
 - Does it identify customer archetypes rather than a random lead list?
 - Does it say what appears to work in the relevant geography/category?
 - Are agency recommendations marketing/GTM scoped rather than management consulting?
+- Are material claims present in `claims.json`?
 - Would an agency strategist find something useful beyond the first page of Google results?
 
-If not, research/synthesize further.
+If not, research/synthesize further before verification.
