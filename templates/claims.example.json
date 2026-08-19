@@ -1,0 +1,23 @@
+{
+  "run_id": "YYYY-MM-DD-client-slug",
+  "claims": [
+    {
+      "id": "C-001",
+      "claim": "Exact material claim from the research draft",
+      "kind": "fact",
+      "importance": "critical",
+      "source_urls": ["https://example.com/source"],
+      "as_of": "YYYY-MM-DD",
+      "producer_confidence": "high"
+    },
+    {
+      "id": "C-002",
+      "claim": "Cross-source conclusion that affects the agency recommendation",
+      "kind": "inference",
+      "importance": "critical",
+      "source_urls": ["https://example.com/source-a", "https://example.com/source-b"],
+      "as_of": "YYYY-MM-DD",
+      "producer_confidence": "medium"
+    }
+  ]
+}
