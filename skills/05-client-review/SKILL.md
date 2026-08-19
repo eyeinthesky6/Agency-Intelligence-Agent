@@ -70,10 +70,11 @@ Create `clients/<slug>/outputs/client-review-YYYY-MM-DD.json` with:
   "period": "Review period",
   "headline": "One-line account read",
   "executive_summary": ["..."],
-  "metrics": [{"name":"","current":"","previous":"","note":""}],
-  "signals": [{"fact":"","impact":"","source":""}],
+  "metrics": [{"name":"","current":"","previous":"","note":"","source":""}],
+  "signals": [{"fact":"","impact":"","confidence":"high","source":""}],
+  "learnings": ["..."],
   "actions_completed": ["..."],
-  "recommendations": [{"action":"","why":"","priority":"high"}],
+  "recommendations": [{"action":"","why":"","priority":"high","source":""}],
   "decisions_needed": ["..."]
 }
 ```
