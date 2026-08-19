@@ -1,6 +1,6 @@
 # Agency Intelligence Agent
 
-A lightweight, skill-based AI workspace that helps agencies research prospects, understand clients, track competitors, prepare meetings, find growth opportunities, and create client-ready briefs.
+A lightweight, skill-based AI workspace that helps agencies research prospects, understand clients, investigate competitors, uncover non-obvious commercial insights, think through pricing, prepare meetings, find growth opportunities, and create client-ready briefs.
 
 **The rule:** useful bus, not interplanetary rocket.
 
@@ -11,12 +11,14 @@ This project intentionally starts as a portable set of Agent Skills, plain-text 
 For each client or prospect, the agent can:
 
 1. **Onboard context** — turn a website, proposal, brand deck, notes, reports, and competitor list into one reusable `client-context.md`.
-2. **Research a prospect** — produce a concise pitch brief with likely problems, market context, competitors, opportunities, and questions to ask.
-3. **Watch competitors** — report meaningful *changes*, not generic competitor summaries.
-4. **Prepare a client meeting** — turn client context + recent signals + previous actions into a one-page briefing.
-5. **Find growth opportunities** — recommend a small number of actions tied to evidence.
-6. **Prepare a client review** — explain what changed, what the agency did, what it means, and what should happen next.
-7. **Create a campaign brief** — convert an approved opportunity into an execution-ready brief.
+2. **Research a prospect** — produce a pitch brief with evidence-backed hypotheses and questions to validate them.
+3. **Run deep competitive intelligence** — connect product, financial, customer, pricing, channel and competitor clues into a commercial story rather than summarising search results.
+4. **Watch competitors** — report meaningful *changes*, not generic profiles.
+5. **Prepare a client meeting** — turn client context + recent signals + previous actions into a one-page briefing.
+6. **Find growth opportunities** — recommend a small number of actions tied to evidence.
+7. **Prepare a client review** — explain what changed, what the agency did, what it means, and what should happen next.
+8. **Create a campaign brief** — convert an approved opportunity into an execution-ready brief.
+9. **Build a pricing strategy** — for list-price or RFQ businesses, separate seller cost, buyer value, working-capital exposure and contract terms instead of guessing a market price.
 
 ## Successful patterns we deliberately copy
 
@@ -27,6 +29,7 @@ The architecture is based on patterns repeatedly seen in adopted agent products 
 - **Structured outputs with sources.** Claygent and Gumloop make agent research useful downstream by returning fields/tables with evidence, not just prose.
 - **Persistent context.** Successful GTM skill packs store company/product context once and let later skills read it.
 - **Finite tool budgets and recovery.** Browser Use exposes bounded actions and recovery loops instead of unlimited browsing.
+- **Cross-source synthesis.** A deep insight must connect multiple facts and explain the commercial implication; copied search snippets do not qualify.
 - **Human approval before execution.** This repo recommends actions; it does not autonomously spend ad budgets, alter campaigns, or contact customers in v0.
 
 See [`docs/SUCCESSFUL_PATTERNS.md`](docs/SUCCESSFUL_PATTERNS.md) for the research notes and what we intentionally rejected.
@@ -47,7 +50,8 @@ Agency-Intelligence-Agent/
 │   ├── 03-meeting-prep/
 │   ├── 04-growth-opportunities/
 │   ├── 05-client-review/
-│   └── 06-campaign-brief/
+│   ├── 06-campaign-brief/
+│   └── 07-pricing-strategy/
 ├── templates/
 │   ├── client-context.md
 │   ├── signal.example.json
@@ -55,48 +59,77 @@ Agency-Intelligence-Agent/
 │   └── weekly-intelligence.md
 ├── scripts/
 │   ├── render_csv.py
-│   └── render_pptx.mjs
+│   ├── render_pptx.mjs
+│   └── smoke_test.py
 └── examples/
-    └── demo-client/
+    ├── wakefit-prospect/
+    └── sintercom-prospect/
 ```
 
 ## Quick start
 
 ### 1. Give the agent a client
 
-Create:
-
-```text
-clients/acme/
-```
-
-Put available client material there, or give the agent access to a Drive folder / uploaded files / URLs.
-
-Then ask:
+Create `clients/acme/`, put available material there (or grant access to a Drive folder / uploads / URLs), then ask:
 
 > Run `00-client-onboard` for Acme. Build the client context from what is available. Mark unknowns instead of inventing them.
-
-The result is:
-
-```text
-clients/acme/client-context.md
-```
 
 ### 2. Research a prospect
 
 > Run `01-prospect-intelligence` for Acme. Give me three or fewer evidence-backed opportunity hypotheses and the questions I should ask to validate them.
 
-### 3. Prepare for a meeting
+### 3. Run deeper competitive intelligence
+
+> Run `02-competitor-watch` in DEEP mode for Acme. Do not summarise search results. Build a product-market, customer, competitor, pricing/commercial and route-to-market story. Every major insight must combine at least two pieces of evidence and state what would falsify the inference.
+
+### 4. Check what changed later
+
+> Run `02-competitor-watch` in WATCH mode for Acme. Report only material changes since our last scan.
+
+### 5. Work out pricing/commercial terms
+
+> Run `07-pricing-strategy` for Acme. If prices are not public, do not guess them. Show the buyer's economic alternative, cost-to-serve model, working-capital exposure, contract terms, pricing corridor and what management must supply before quoting.
+
+### 6. Prepare for a meeting
 
 > Run `03-meeting-prep` for Acme. Use the client context, recent signals, and open actions. Give me only what matters for tomorrow's meeting.
 
-### 4. Check competitors
-
-> Run `02-competitor-watch` for Acme. Check the named competitors and report only material changes since our last scan. Store sourced signals and recommend an action only where justified.
-
-### 5. Ask what to do next
+### 7. Ask what to do next
 
 > Run `04-growth-opportunities` for Acme. Give me the top three evidence-backed opportunities, ranked by likely impact and effort.
+
+## What counts as an insight
+
+A search result is evidence, not intelligence.
+
+**Bad:**
+
+> Company X received a ₹150 crore export order.
+
+**Useful:**
+
+> The order is unusually large relative to Company X's annual revenue, while its receivable/inventory cycle and bank-limit utilisation are already stretched. If the order ramps without better payment, batching or inventory terms, revenue growth can create a financing problem. The commercial recommendation is therefore not merely "win more orders"; it is to price working capital and order-smoothing into the contract.
+
+The second statement is an inference. It must show the source facts, confidence, and the management data needed to verify it.
+
+## Industrial/manufacturing research
+
+For B2B manufacturers, DEEP mode explicitly looks at:
+
+- customers and customer concentration
+- single-source / multi-source status
+- order wins relative to company size
+- legacy vs emerging product families
+- substitute manufacturing processes
+- technology licensing / JVs / patents
+- capacity / localization / exports
+- working capital and margin pressure
+- RFQ pricing architecture
+- raw-material pass-through / FX / tooling / payment terms
+- competitors' application breadth
+- application-engineering and technical marketing gaps
+
+The result should help the company sell, price, diversify, position or choose a product/market direction — not merely create a content calendar.
 
 ## Client memory
 
@@ -107,21 +140,6 @@ clients/<client>/client-context.md
 clients/<client>/signals.jsonl
 clients/<client>/actions.json
 clients/<client>/outputs/
-```
-
-A signal should look like:
-
-```json
-{
-  "observed_at": "2026-08-19",
-  "entity": "Competitor A",
-  "type": "pricing_change",
-  "fact": "Introduced a lower-priced starter plan",
-  "source_url": "https://example.com/pricing",
-  "confidence": "high",
-  "impact": "Reduces the entry-price gap against the client",
-  "recommended_action": "Test value-led starter positioning before considering a discount"
-}
 ```
 
 That JSONL history is enough memory for v0. Add infrastructure only when users prove they need it.
@@ -137,12 +155,10 @@ python scripts/render_csv.py templates/client-review.example.json
 # Six-slide PowerPoint
 npm install
 node scripts/render_pptx.mjs templates/client-review.example.json
+
+# Repository contract checks
+python scripts/smoke_test.py
 ```
-
-- `scripts/render_csv.py` → UTF-8 CSV that opens directly in Excel/Google Sheets
-- `scripts/render_pptx.mjs` → six-slide `.pptx` client review
-
-A host environment with native spreadsheet tooling can turn the same JSON into a richer `.xlsx` without changing the agent workflow.
 
 ## Product boundary
 
@@ -150,7 +166,9 @@ A host environment with native spreadsheet tooling can turn the same JSON into a
 
 - web research using the host agent's existing search/browser tools
 - client-file / Drive context when the host provides it
+- deep competitive/product-market intelligence
 - sourced competitor signals
+- B2B/RFQ pricing strategy
 - prospect briefs
 - meeting prep
 - growth recommendations
@@ -179,12 +197,14 @@ A v0 run is useful if an agency can take a real prospect/client and, with limite
 
 - pitch/proposal preparation
 - client meeting prep
+- competitive/product strategy
+- pricing/commercial discussion
 - competitor update
 - monthly review
 - new campaign recommendation
 
-The core question is not "Is the AI impressive?" It is **"Did this save the agency time or help it look smarter in front of a client?"**
+The core question is not "Is the AI impressive?" It is **"Did this uncover something decision-useful, save the agency time, or help it look materially smarter in front of the client?"**
 
 ## License
 
-This repository borrows **patterns**, not copied third-party skill text, from the referenced projects. See the repository license before redistributing modifications.
+MIT. This repository borrows **patterns**, not copied third-party skill text, from the referenced projects.
